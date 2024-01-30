@@ -16,7 +16,10 @@ sessionRouter.post("/", (req, res, next) => {
       });
     }
 
-    return res.status(401).json(undefined);
+    return res.status(401).json({
+      message:
+        "Either email or password are incorrect. Please try again, or Sign Up to create a new account.",
+    });
   })(req, res, next);
 });
 
