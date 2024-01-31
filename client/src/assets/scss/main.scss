@@ -2,6 +2,31 @@
 @import "~foundation-sites/scss/foundation";
 @include foundation-everything;
 // place global css here
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+body {
+  background-color: #F4F3EE;
+  font-family: 'Inconsolata', monospace;
+  // font-family: 'Lucida Console', Courier, monospace;
+}
+h1 {
+  font-family: 'Inconsolata', monospace;
+  font-weight: 100;
+}
+
+
+.nav-bar {
+  ul {background-color: #2e3d7d};
+  // color:  #F4F3EE
+}
+.top-bar {background-color: #6694CC}
+
+.menu {color: #F4F3EE}
+
+.button {
+  background-color: #a3003f;
+  color: #F4F3EE
+}
+
 *,
 *::before,
 *::after {
