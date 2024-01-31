@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import BuildTile from "./BuildTile"
 
-
 const BuildsList = (props) => {
 
     const [currentBuilds, setCurrentBuilds] = useState([])
@@ -18,7 +17,7 @@ const BuildsList = (props) => {
 
     const buildTitles = currentBuilds.map((build) => {
         return (
-            <BuildTile key={build.id} build={build} />
+            <li key={build.id}><BuildTile key={build.id} build={build} /></li>
         )
     })
 
@@ -27,10 +26,9 @@ const BuildsList = (props) => {
     }, [])
 
     return (
-        <div>
-            <h4>hello from builds list</h4>
+        <ul>
             {buildTitles}
-        </div>
+        </ul>
     )
 }
 

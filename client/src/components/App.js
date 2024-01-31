@@ -29,7 +29,6 @@ const App = (props) => {
       <TopBar user={currentUser} />
       <Switch>
         <Route exact path="/">
-          <h2>Hello from react</h2>
           <BuildsList />
         </Route>
         <Route exact path="/users/new" component={RegistrationForm} />
