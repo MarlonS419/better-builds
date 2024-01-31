@@ -4,20 +4,33 @@ class Build extends Model {
     static get tableName() {
         return "builds"
     }
-    
+
     static get jsonSchema() {
         return {
             type: "object",
+            required: [
+                "title",
+                "processor",
+                "graphicsCard",
+                "ram",
+                "motherboard",
+                "case",
+                "coolingSystem",
+                "storageType",
+                "coolingSystemType",
+                "storageAmount"
+            ],
             properties: {
+                title: { type: "string" },
                 processor: { type: "string" },
-                graphics_card: { type: "string" },
+                graphicsCard: { type: "string" },
                 ram: { type: ["string", "integer"] },
                 motherboard: { type: "string" },
-                case: { type: "string" },
-                cooling_system: { type: "string" },
-                storage_type: { type: "string" },
-                cooling_system_type: { type: "string" },
-                storage_amount: { type: ["string", "integer"] }
+                storageAmount: { type: ["string", "integer"] },
+                storageType: { type: "string" },
+                coolingSystem: { type: "string" },
+                coolingSystemType: { type: "string" },
+                case: { type: "string" }
             }
         }
     }
