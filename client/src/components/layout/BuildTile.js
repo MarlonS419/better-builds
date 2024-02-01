@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 const BuildTile = ({ build }) => {
 
-    const { id } = build.id
+    const { id } = build
     return (
         <Link to ={`/builds/${id}`}>
             title: {build.title}

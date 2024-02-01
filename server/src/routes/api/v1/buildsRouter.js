@@ -1,5 +1,6 @@
 import express from "express";
 import { Build } from "../../../models/index.js"
+import BuildSerializer from "../../../serializers/BuildSerializer.js";
 
 const buildsRouter = new express.Router()
 
@@ -13,11 +14,11 @@ buildsRouter.get("/", async (req, res) => {
 })
 
 buildsRouter.get("/:id", async (req, res) => {
-    const { id } = req.params
+    const id  = req.params.id
     try{
-        const build = Build.query().findById(id)
-        // build.users = await build.$relatedQuery("users")
-        res.status(200).json({build: build})
+        const selectedBuild = await Build.query().findById(id)
+        const serializedBuild = BuildSerializer.getBuildDetails(selectedBuild)
+        res.status(200).json({ selectedBuild: serializedBuild })
     } catch(error) {
         console.log(error)
         res.status(500).json({errors: error})
