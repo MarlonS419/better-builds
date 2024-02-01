@@ -20,7 +20,6 @@ buildsRouter.get("/:id", async (req, res) => {
         const serializedBuild = BuildSerializer.getBuildDetails(selectedBuild)
         res.status(200).json({ selectedBuild: serializedBuild })
     } catch(error) {
-        console.log(error)
         res.status(500).json({errors: error})
     }
 })
