@@ -25,7 +25,7 @@ const BuildShow = (props) => {
     }, [])
 
     return (
-        <div>
+        <>
             <h3>{build.title}</h3>
             <ul>
                 <li>Case: {build.case}</li>
@@ -38,7 +38,7 @@ const BuildShow = (props) => {
                 <li>Cooling System: {build.coolingSystem}</li>
                 <li>Cooling System Type: {build.coolingSystemType}</li>
             </ul>
-        </div>
+        </>
     )
 }
 

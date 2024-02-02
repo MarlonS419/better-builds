@@ -6,7 +6,7 @@ const BuildTile = ({ build }) => {
     const { id } = build
     return (
         <Link to ={`/builds/${id}`}>
-            title: {build.title}
+            Title: {build.title}
         </Link>
     )
 }
