@@ -14,7 +14,7 @@ exports.up = async (knex) => {
         table.text("comment")
         table.timestamp("createdAt").notNullable().defaultTo(knex.fn.now());
         table.timestamp("updatedAt").notNullable().defaultTo(knex.fn.now());
-       })
+    })
 }
 
 /**

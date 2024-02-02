@@ -13,7 +13,7 @@ const ReviewForm = props => {
     const submitReview = async (event) => {
         event.preventDefault()
         try {
-            const newReviewFormResponse = await fetch("/api/v1/builds", {
+            const newReviewFormResponse = await fetch("/api/v1/builds/id", {
                 method: "POST",
                 headers: new Headers({ "Content-Type": "application/json" }),
                 body: JSON.stringify(newReview)
@@ -41,10 +41,6 @@ const ReviewForm = props => {
         }
     }
 
-    if (redirect) {
-        return <Redirect push to="/" />
-    }
-
     const handleReviewForm = (event) => {
         setNewReview(
             {...newReview,
@@ -56,7 +52,7 @@ const ReviewForm = props => {
     return (
         <>
             <h3>Submit a Review</h3>
-            <ErrorList errors={reviewFormErrors} />
+            {/* <ErrorList errors={reviewFormErrors} /> */}
             <form onSubmit={submitReview}>
                 <label htmlFor="rating">Rating:
                     <label htmlFor="1">
@@ -78,6 +74,7 @@ const ReviewForm = props => {
                 <label htmlFor="comment">Comment:
                     <input name="comment" type="text" onChange={handleReviewForm}/>
                 </label>
+                <input type="submit" value="Submit Review!" />
             </form>
         </>
     )

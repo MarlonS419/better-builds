@@ -1,4 +1,4 @@
-import { User } from "../../index.js"
+import { User } from "../../models/index.js"
 
 class UserSeeder {
     static async seed() {  

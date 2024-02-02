@@ -1,4 +1,4 @@
-import { Build } from "../../index.js"
+import { Build } from "../../models/index.js"
 
 class BuildSeeder {
     static async seed() {
