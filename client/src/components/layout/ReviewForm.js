@@ -1,12 +1,50 @@
 import React from "react"
 const { useState } = require("react")
 
+
 const ReviewForm = props => {
     const [newReview, setNewReview] = useState({
         rating: null,
         comment: ""
     })
-    
+
+    const [reviewFormErrors, setReviewFormErrors] = useState([])
+
+    const submitReview = async (event) => {
+        event.preventDefault()
+        try {
+            const newReviewFormResponse = await fetch("/api/v1/builds", {
+                method: "POST",
+                headers: new Headers({ "Content-Type": "application/json" }),
+                body: JSON.stringify(newReview)
+            })
+            if (!newReviewFormResponse.ok) {
+                if (newReviewFormResponse.status === 422) {
+                    const serverData = await newReviewFormResponse.json()
+                    const serverErrors = translateServerErrors(serverData.errors)
+                    const cleanedServerErrors = cleanReviewFormErrors(serverErrors)
+                    return setReviewFormErrors(cleanedServerErrors)
+                }
+                else {
+                    const errorMessage = `${newReviewFormResponse.status} - ${newReviewFormResponse.statusText}`
+                    const error = new Error(errorMessage)
+                    throw (error)
+                }
+            }
+            else {
+                const body = await response.json()
+                const updatedReview = newReview.reviews.concat(body.review)
+                setEnchantedForest({...newReview, reviews: updatedReview})
+            }
+        } catch (error) {
+            console.error(`Error in POST: ${error}`)
+        }
+    }
+
+    if (redirect) {
+        return <Redirect push to="/" />
+    }
+
     const handleReviewForm = (event) => {
         setNewReview(
             {...newReview,
@@ -18,7 +56,8 @@ const ReviewForm = props => {
     return (
         <>
             <h3>Submit a Review</h3>
-            <form>
+            <ErrorList errors={reviewFormErrors} />
+            <form onSubmit={submitReview}>
                 <label htmlFor="rating">Rating:
                     <label htmlFor="1">
                         1:<input name="rating" type="radio" value="1" onChange={handleReviewForm}/>
