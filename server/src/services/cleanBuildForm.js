@@ -1,7 +1,11 @@
 const cleanBuildForm = (buildFormData) => {
     Object.keys(buildFormData).forEach((formSection) => {
-        if(buildFormData[formSection] === ""){
-            delete buildFormData[formSection]
+        if (formSection === "ram" || formSection === "storageAmount") {
+            console.log(`found ${formSection} - ${buildFormData[formSection]}`)
+        } else {
+            if (buildFormData[formSection].trim() === "") {
+                delete buildFormData[formSection]
+            }
         }
     })
     return buildFormData
