@@ -32,8 +32,33 @@ const BuildForm = (props) => {
         )
     }
 
+    const checkRamAndStorage = () => {        }
+        let errors = {}
+        if(parseInt(newBuild.ram) === NaN){
+            const ramError = { "RAM": "Must be an Number!"}
+            setBuildFormErrors(buildFormErrors.concat(ramError))
+            // add error to errors
+        }
+        if(parseInt(newBuild.storageAmount) === NaN){
+            const storageError = { "Storage Amount": "Must be an Number!" }
+            setBuildFormErrors(buildFormErrors.concat(storageError))
+        }
+
+        // ensure they have filled out each req field
+
+        // use the lodash method for checking an empty object in the React Form Validations article
+    //     if (errors has errors) {
+    //         setBuildFormErrors(...errors)
+    //         return false 
+    //     } else {
+    //         return true
+    //     }
+    
+
     const submitBuild = async (event) => {
         event.preventDefault()
+        checkRamAndStorage()
+        console.log("After checking ram and storage: ", buildFormErrors)
         try {
             const newBuildFormResponse = await fetch("/api/v1/builds/new", {
                 method: "POST",
