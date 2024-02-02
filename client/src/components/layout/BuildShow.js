@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-
+import ReviewForm from "./ReviewForm"
 const BuildShow = (props) => {
     const [build, setBuild] = useState({})
 
@@ -38,6 +38,7 @@ const BuildShow = (props) => {
                 <li>Cooling System: {build.coolingSystem}</li>
                 <li>Cooling System Type: {build.coolingSystemType}</li>
             </ul>
+            <ReviewForm />
         </>
     )
 }
