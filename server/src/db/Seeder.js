@@ -58,7 +58,7 @@ class Seeder {
       },
       {
         email: "test3@email.com",
-        cryptedPassword: "$123"
+        cryptedPassword: "123"
       }
     ]
 
