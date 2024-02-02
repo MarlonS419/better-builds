@@ -2,6 +2,7 @@
 import { connection } from "../boot.js"
 import UserSeeder from "./seeders/UserSeeder.js"
 import BuildSeeder from "./seeders/BuildSeeder.js"
+import ReviewSeeder from "./seeders/ReviewSeeder.js"
 
 
 class Seeder {
@@ -11,6 +12,9 @@ class Seeder {
     
     console.log("seeding build data")
     await BuildSeeder.seed()
+
+    console.log("seeding review data")
+    await ReviewSeeder
 
     console.log("Done!")
     await connection.destroy()
