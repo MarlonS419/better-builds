@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
+import ReviewsList from "./ReviewsList"
 
 const BuildShow = (props) => {
-    const [build, setBuild] = useState({})
+    const [build, setBuild] = useState({ reviews: [] })
 
     const id = props.match.params.id
 
@@ -14,7 +15,7 @@ const BuildShow = (props) => {
                 throw error
             }
             const body = await response.json()
-            setBuild(body.selectedBuild)
+            setBuild(body.build)
         } catch(error) {
             console.log(error)
         }
@@ -38,6 +39,7 @@ const BuildShow = (props) => {
                 <li>Cooling System: {build.coolingSystem}</li>
                 <li>Cooling System Type: {build.coolingSystemType}</li>
             </ul>
+            <ReviewsList reviews={build.reviews}/>
         </>
     )
 }

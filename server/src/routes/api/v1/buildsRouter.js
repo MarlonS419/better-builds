@@ -17,8 +17,9 @@ buildsRouter.get("/:id", async (req, res) => {
     const id  = req.params.id
     try{
         const selectedBuild = await Build.query().findById(id)
-        const serializedBuild = BuildSerializer.getBuildDetails(selectedBuild)
-        res.status(200).json({ selectedBuild: serializedBuild })
+        const serializedBuild = await BuildSerializer.getBuildDetails(selectedBuild)
+        console.log(serializedBuild)
+        res.status(200).json({ build: serializedBuild })
     } catch(error) {
         res.status(500).json({errors: error})
     }
