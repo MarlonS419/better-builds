@@ -24,13 +24,27 @@ class Build extends Model {
                 title: { type: "string" },
                 processor: { type: "string" },
                 graphicsCard: { type: "string" },
-                ram: { type: ["string", "integer"] },
+                ram: { type: ["integer", "string"] },
                 motherboard: { type: "string" },
-                storageAmount: { type: ["string", "integer"] },
+                storageAmount: { type: ["integer", "string"] },
                 storageType: { type: "string" },
                 coolingSystem: { type: "string" },
                 coolingSystemType: { type: "string" },
                 case: { type: "string" }
+            }
+        }
+    }
+
+    static get relationMappings(){
+        const { User } = require("./index")
+        return {
+            user: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: User,
+                join:{
+                    from: "builds.userId",
+                    to: "users.id"
+                }
             }
         }
     }
