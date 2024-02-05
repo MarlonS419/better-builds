@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SignOutButton from "../authentication/SignOutButton";
+import AuthenticatedRoute from "../authentication/AuthenticatedRoute";
+import BuildForm from "./BuildForm";
 
 const TopBar = ({ user }) => {
   const unauthenticatedListItems = [
@@ -25,10 +27,8 @@ const TopBar = ({ user }) => {
       <div className="top-bar-left">
         <ul className="menu">
           <li className="menu-text">App</li>
-          <li>
-            <Link to="/">Home</Link>
-            <Link to="/new-build">Add Build</Link>
-          </li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/builds/new">Add Build</Link></li>
         </ul>
       </div>
       <div className="top-bar-right">

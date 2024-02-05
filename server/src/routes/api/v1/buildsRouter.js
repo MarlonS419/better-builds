@@ -7,7 +7,7 @@ import BuildSerializer from "../../../serializers/BuildSerializer.js";
 
 const buildsRouter = new express.Router()
 
-buildsRouter.post("/new", async (req, res) => {
+buildsRouter.post("/", async (req, res) => {
     const currentlyLoggedInUser = req.user
     const buildToAdd = req.body
     buildToAdd.userId = currentlyLoggedInUser.id

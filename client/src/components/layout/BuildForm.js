@@ -21,69 +21,68 @@ const BuildForm = (props) => {
 
     const [buildFormErrors, setBuildFormErrors] = useState({})
 
-    const [redirect, setRedirect] = useState(false)
-
-    const [newBuildID, setBuildID] = useState(0)
+    const [redirect, setRedirect] = useState({
+        redirectState: false,
+        newBuildID: 0
+    })
 
     const handleFormData = (event) => {
-        setNewBuild(
-            {
-                ...newBuild,
-                [event.currentTarget.name]: event.currentTarget.value
-            }
+        setNewBuild({
+            ...newBuild,
+            [event.currentTarget.name]: event.currentTarget.value
+        }
         )
     }
 
     const validateFormOnFrontEnd = () => {
+        const requiredField = [
+            { "title": "Title" },
+            { "processor": "CPU" },
+            { "graphicsCard": "GPU" },
+            { "ram": "RAM" },
+            { "motherboard": "Motherboard" },
+            { "storageAmount": "Storage Amount" },
+            { "storageType": "Storage Type" },
+            { "coolingSystem": "Cooling System" },
+            { "coolingSystemType": "Cooling System Type" },
+            { "case": "Case" }
+        ]
+
+        const numberFields = [
+            { "ram": "RAM" },
+            { "storageAmount": "Storage Amount" }
+        ]
+
         let errors = {}
-        if (newBuild.title.trim() === "") {
-            errors = { ...errors, "Title": "is required!" }
+        for (const fieldObject of requiredField) {
+            for(const key in fieldObject){
+                if(newBuild[key].trim() === ""){
+                    errors = { ...errors, [fieldObject[key]]: "is required!"}
+                }
+            }
         }
-        if (newBuild.processor.trim() === "") {
-            errors = { ...errors, "CPU": "is required!" }
+
+        for (const fieldObject of numberFields) {
+            for(const key in fieldObject){
+                if(!parseInt(newBuild[key])){
+                    errors = { ...errors, [fieldObject[key]]: "is required to be a number!"}
+                }
+            }
         }
-        if (newBuild.graphicsCard.trim() === "") {
-            errors = { ...errors, "GPU": "is required!" }
-        }
-        if (newBuild.ram.trim() === "") {
-            errors = { ...errors, "RAM": "is required!" }
-        } else if (!parseInt(newBuild.ram)) {
-            errors = { ...errors, "RAM": "needs to be a number!" }
-        }
-        if (newBuild.motherboard.trim() === "") {
-            errors = { ...errors, "Motherboard": "is required!" }
-        }
-        if (newBuild.storageAmount.trim() === "") {
-            errors = { ...errors, "Storage Amount": "is required!" }
-        } else if (!parseInt(newBuild.storageAmount)) {
-            errors = { ...errors, "Storage Amount": "needs to be a number!" }
-        }
-        if (newBuild.storageType.trim() === "") {
-            errors = { ...errors, "Storage Type": "is required!" }
-        }
-        if (newBuild.coolingSystem.trim() === "") {
-            errors = { ...errors, "Cooling System": "is required!" }
-        }
-        if (newBuild.coolingSystemType.trim() === "") {
-            errors = { ...errors, "Cooling System Type": "is required!" }
-        }
-        if (newBuild.case.trim() === "") {
-            errors = { ...errors, "Case": "is required!" }
-        }
+        
         if(!_.isEmpty(errors)){
             setBuildFormErrors(errors)
             return false
-        }
-        else{
+        } else {
             return true
         }
     }
 
     const submitBuild = async (event) => {
         event.preventDefault()
-        if(validateFormOnFrontEnd()){
+        if (validateFormOnFrontEnd()) {
             try {
-                const newBuildFormResponse = await fetch("/api/v1/builds/new", {
+                const newBuildFormResponse = await fetch("/api/v1/builds", {
                     method: "POST",
                     headers: new Headers({ "Content-Type": "application/json" }),
                     body: JSON.stringify(newBuild)
@@ -93,8 +92,7 @@ const BuildForm = (props) => {
                         const serverData = await newBuildFormResponse.json()
                         const serverErrors = translateServerErrors(serverData.errors)
                         return setBuildFormErrors(serverErrors)
-                    }
-                    else {
+                    } else {
                         const errorMessage = `${newBuildFormResponse.status} - ${newBuildFormResponse.statusText}`
                         const error = new Error(errorMessage)
                         throw (error)
@@ -102,8 +100,12 @@ const BuildForm = (props) => {
                 }
                 else {
                     const parsedResponse = await newBuildFormResponse.json()
-                    setBuildID(parseInt(parsedResponse.newBuild.id))
-                    setRedirect(true)
+                    const newBuildID = parsedResponse.newBuild.id
+                    const newRedirectState = {
+                        redirectState: true,
+                        newBuildID: newBuildID
+                    }
+                    setRedirect(newRedirectState)                
                 }
             } catch (error) {
                 console.error(`Error in POST: ${error}`)
@@ -111,8 +113,8 @@ const BuildForm = (props) => {
         }
     }
 
-    if (redirect) {
-        const buildPage = `/builds/${newBuildID}`
+    if (redirect.redirectState) {
+        const buildPage = `/builds/${redirect.newBuildID}`
         return <Redirect push to={buildPage} />
     }
 
