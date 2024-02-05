@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Redirect } from "react-router-dom"
 import ErrorList from "./ErrorList"
 import translateServerErrors from "../../services/translateServerErrors"
-import cleanBuildFormErrors from "../../services/cleanBuildFormErrors"
+import _ from "lodash"
 
 const BuildForm = (props) => {
 
@@ -19,7 +19,7 @@ const BuildForm = (props) => {
         case: "",
     })
 
-    const [buildFormErrors, setBuildFormErrors] = useState([])
+    const [buildFormErrors, setBuildFormErrors] = useState({})
 
     const [redirect, setRedirect] = useState(false)
 
@@ -32,57 +32,78 @@ const BuildForm = (props) => {
         )
     }
 
-    const checkRamAndStorage = () => {        }
+    const validateFormOnFrontEnd = () => {
         let errors = {}
-        if(parseInt(newBuild.ram) === NaN){
-            const ramError = { "RAM": "Must be an Number!"}
-            setBuildFormErrors(buildFormErrors.concat(ramError))
-            // add error to errors
+        if (newBuild.title.trim() === "") {
+            errors = { ...errors, "Title": "is required!" }
         }
-        if(parseInt(newBuild.storageAmount) === NaN){
-            const storageError = { "Storage Amount": "Must be an Number!" }
-            setBuildFormErrors(buildFormErrors.concat(storageError))
+        if (newBuild.processor.trim() === "") {
+            errors = { ...errors, "CPU": "is required!" }
         }
-
-        // ensure they have filled out each req field
-
-        // use the lodash method for checking an empty object in the React Form Validations article
-    //     if (errors has errors) {
-    //         setBuildFormErrors(...errors)
-    //         return false 
-    //     } else {
-    //         return true
-    //     }
-    
+        if (newBuild.graphicsCard.trim() === "") {
+            errors = { ...errors, "GPU": "is required!" }
+        }
+        if (newBuild.ram.trim() === "") {
+            errors = { ...errors, "RAM": "is required!" }
+        } else if (!parseInt(newBuild.ram)) {
+            errors = { ...errors, "RAM": "needs to be a number!" }
+        }
+        if (newBuild.motherboard.trim() === "") {
+            errors = { ...errors, "Motherboard": "is required!" }
+        }
+        if (newBuild.storageAmount.trim() === "") {
+            errors = { ...errors, "Storage Amount": "is required!" }
+        } else if (!parseInt(newBuild.storageAmount)) {
+            errors = { ...errors, "Storage Amount": "needs to be a number!" }
+        }
+        if (newBuild.storageType.trim() === "") {
+            errors = { ...errors, "Storage Type": "is required!" }
+        }
+        if (newBuild.coolingSystem.trim() === "") {
+            errors = { ...errors, "Cooling System": "is required!" }
+        }
+        if (newBuild.coolingSystemType.trim() === "") {
+            errors = { ...errors, "Cooling System Type": "is required!" }
+        }
+        if (newBuild.case.trim() === "") {
+            errors = { ...errors, "Case": "is required!" }
+        }
+        if(!_.isEmpty(errors)){
+            setBuildFormErrors(errors)
+            return false
+        }
+        else{
+            return true
+        }
+    }
 
     const submitBuild = async (event) => {
         event.preventDefault()
-        checkRamAndStorage()
-        console.log("After checking ram and storage: ", buildFormErrors)
-        try {
-            const newBuildFormResponse = await fetch("/api/v1/builds/new", {
-                method: "POST",
-                headers: new Headers({ "Content-Type": "application/json" }),
-                body: JSON.stringify(newBuild)
-            })
-            if (!newBuildFormResponse.ok) {
-                if (newBuildFormResponse.status === 422) {
-                    const serverData = await newBuildFormResponse.json()
-                    const serverErrors = translateServerErrors(serverData.errors)
-                    const cleanedServerErrors = cleanBuildFormErrors(serverErrors)
-                    return setBuildFormErrors(cleanedServerErrors)
+        if(validateFormOnFrontEnd()){
+            try {
+                const newBuildFormResponse = await fetch("/api/v1/builds/new", {
+                    method: "POST",
+                    headers: new Headers({ "Content-Type": "application/json" }),
+                    body: JSON.stringify(newBuild)
+                })
+                if (!newBuildFormResponse.ok) {
+                    if (newBuildFormResponse.status === 422) {
+                        const serverData = await newBuildFormResponse.json()
+                        const serverErrors = translateServerErrors(serverData.errors)
+                        return setBuildFormErrors(serverErrors)
+                    }
+                    else {
+                        const errorMessage = `${newBuildFormResponse.status} - ${newBuildFormResponse.statusText}`
+                        const error = new Error(errorMessage)
+                        throw (error)
+                    }
                 }
                 else {
-                    const errorMessage = `${newBuildFormResponse.status} - ${newBuildFormResponse.statusText}`
-                    const error = new Error(errorMessage)
-                    throw (error)
+                    setRedirect(true)
                 }
+            } catch (error) {
+                console.error(`Error in POST: ${error}`)
             }
-            else {
-                setRedirect(true)
-            }
-        } catch (error) {
-            console.error(`Error in POST: ${error}`)
         }
     }
 

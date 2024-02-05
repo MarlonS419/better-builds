@@ -15,7 +15,6 @@ buildsRouter.post("/new", async (req, res) => {
         await Build.query().insert(cleanedFormData)
         return res.status(201).json({})
     } catch (error) {
-        console.log("Error from Query in buildRouter: ", error)
         if(error instanceof ValidationError){
             return res.status(422).json({errors: error.data})
         }

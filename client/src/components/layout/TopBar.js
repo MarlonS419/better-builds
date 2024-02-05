@@ -27,6 +27,7 @@ const TopBar = ({ user }) => {
           <li className="menu-text">App</li>
           <li>
             <Link to="/">Home</Link>
+            <Link to="/new-build">Add Build</Link>
           </li>
         </ul>
       </div>
