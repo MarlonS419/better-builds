@@ -1,7 +1,6 @@
 import React from "react"
 
-const ReviewTile = ({ review }) => {
-    const { id, rating, comment, createdAt, updatedAt } = review
+const ReviewTile = ({ id, rating, comment, createdAt, updatedAt }) => {
     return (
         <li>
             Rating: {rating}/5<br/>
