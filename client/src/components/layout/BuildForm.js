@@ -23,6 +23,8 @@ const BuildForm = (props) => {
 
     const [redirect, setRedirect] = useState(false)
 
+    const [newBuildID, setBuildID] = useState(0)
+
     const handleFormData = (event) => {
         setNewBuild(
             {
@@ -99,6 +101,8 @@ const BuildForm = (props) => {
                     }
                 }
                 else {
+                    const parsedResponse = await newBuildFormResponse.json()
+                    setBuildID(parseInt(parsedResponse.newBuild.id))
                     setRedirect(true)
                 }
             } catch (error) {
@@ -108,7 +112,8 @@ const BuildForm = (props) => {
     }
 
     if (redirect) {
-        return <Redirect push to="/" />
+        const buildPage = `/builds/${newBuildID}`
+        return <Redirect push to={buildPage} />
     }
 
     return (

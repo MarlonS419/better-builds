@@ -13,8 +13,8 @@ buildsRouter.post("/new", async (req, res) => {
     buildToAdd.userId = currentlyLoggedInUser.id
     try {
         const cleanedFormData = cleanBuildForm(buildToAdd)
-        await Build.query().insert(cleanedFormData)
-        return res.status(201).json({})
+        const insertedBuild = await Build.query().insert(cleanedFormData)
+        return res.status(201).json({newBuild: insertedBuild})
     } catch (error) {
         if(error instanceof ValidationError){
             return res.status(422).json({errors: error.data})
