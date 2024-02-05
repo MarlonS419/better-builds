@@ -9,6 +9,7 @@ import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";
 import BuildsList from "./layout/BuildsList";
 import BuildForm from "./layout/BuildForm";
+import BuildShow from "./layout/BuildShow";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -35,6 +36,7 @@ const App = (props) => {
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
         <Route exact path="/new-build" component={BuildForm} />
+        <Route exact path="/builds/:id" component={BuildShow} />
       </Switch>
     </Router>
   );
