@@ -55,22 +55,22 @@ const BuildForm = (props) => {
 
         let errors = {}
         for (const fieldObject of requiredField) {
-            for(const key in fieldObject){
-                if(newBuild[key].trim() === ""){
-                    errors = { ...errors, [fieldObject[key]]: "is required!"}
+            for (const key in fieldObject) {
+                if (newBuild[key].trim() === "") {
+                    errors = { ...errors, [fieldObject[key]]: "is required!" }
                 }
             }
         }
 
         for (const fieldObject of numberFields) {
-            for(const key in fieldObject){
-                if(!parseInt(newBuild[key])){
-                    errors = { ...errors, [fieldObject[key]]: "is required to be a number!"}
+            for (const key in fieldObject) {
+                if (!parseInt(newBuild[key])) {
+                    errors = { ...errors, [fieldObject[key]]: "is required to be a number!" }
                 }
             }
         }
-        
-        if(!_.isEmpty(errors)){
+
+        if (!_.isEmpty(errors)) {
             setBuildFormErrors(errors)
             return false
         } else {
@@ -97,15 +97,14 @@ const BuildForm = (props) => {
                         const error = new Error(errorMessage)
                         throw (error)
                     }
-                }
-                else {
+                } else {
                     const parsedResponse = await newBuildFormResponse.json()
                     const newBuildID = parsedResponse.newBuild.id
                     const newRedirectState = {
                         redirectState: true,
                         newBuildID: newBuildID
                     }
-                    setRedirect(newRedirectState)                
+                    setRedirect(newRedirectState)
                 }
             } catch (error) {
                 console.error(`Error in POST: ${error}`)
