@@ -1,6 +1,6 @@
 class ReviewSerializer {
     static getReviewDetails(reviews) {
-        const allowedAttributes = ["rating", "comment", "id", "createdAt", "updatedAt"]
+        const allowedAttributes = ["rating", "comment", "id"]
 
         const serializedReviews = reviews.map(review => {
             const serializedReview = {}

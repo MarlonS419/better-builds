@@ -1,11 +1,12 @@
 import React from "react"
 
-const ReviewTile = ({ id, rating, comment, createdAt, updatedAt }) => {
+const ReviewTile = ({ id, rating, comment }) => {
     return (
-        <li>
-            Rating: {rating}/5<br/>
-            Comment: {comment}
-        </li>
+        <>
+            <p>Rating: {rating}/5</p> 
+            <p>Comment: {comment}</p>
+        </>
+        
     )
 }
 

@@ -4,6 +4,7 @@ class Review extends Model {
     static get tableName() {
         return "reviews"
     }
+
     static get jsonSchema() {
         return {
             type: "object",
@@ -14,6 +15,7 @@ class Review extends Model {
             }
         }
     }
+
     static get relationMappings() {
         const { User, Build } = require("./index")
         return {
@@ -36,4 +38,5 @@ class Review extends Model {
         }
     }
 }
+
 module.exports = Review
