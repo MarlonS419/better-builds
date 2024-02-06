@@ -17,7 +17,7 @@ const BuildsList = (props) => {
 
     const buildTiles = currentBuilds.map((build) => {
         return (
-            <BuildTile build={build} />
+            <BuildTile key={build.id} build={build} />
         )
     })
 
