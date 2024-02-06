@@ -19,4 +19,6 @@ router.get(authedClientRoutes, (req, res) => {
   }
 });
 
+
+
 export default router;

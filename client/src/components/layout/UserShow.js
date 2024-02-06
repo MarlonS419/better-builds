@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import UserBuildList from "./UserBuildList";
 
 const UserShow = ({user}) => {
-
     const createdAt = new Date(user.createdAt)
     return (
         <>
@@ -11,7 +11,7 @@ const UserShow = ({user}) => {
                 <li>{user.email}</li>
                 <li>User since: {createdAt.toLocaleDateString()}</li>
             </ul>
-            <UserBuildsList user={user}/>
+            <UserBuildList user={user}/>
         </>
     )
 }
