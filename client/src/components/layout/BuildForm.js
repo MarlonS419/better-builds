@@ -23,7 +23,7 @@ const BuildForm = (props) => {
 
     const [redirect, setRedirect] = useState({
         redirectState: false,
-        newBuildID: 0
+        newBuildID: undefined
     })
 
     const handleFormData = (event) => {
@@ -36,21 +36,21 @@ const BuildForm = (props) => {
 
     const validateFormOnFrontEnd = () => {
         const requiredField = [
-            { "title": "Title" },
-            { "processor": "CPU" },
-            { "graphicsCard": "GPU" },
-            { "ram": "RAM" },
-            { "motherboard": "Motherboard" },
-            { "storageAmount": "Storage Amount" },
-            { "storageType": "Storage Type" },
-            { "coolingSystem": "Cooling System" },
-            { "coolingSystemType": "Cooling System Type" },
-            { "case": "Case" }
+            { title: "Title" },
+            { processor: "CPU" },
+            { graphicsCard: "GPU" },
+            { ram: "RAM" },
+            { motherboard: "Motherboard" },
+            { storageAmount: "Storage Amount" },
+            { storageType: "Storage Type" },
+            { coolingSystem: "Cooling System" },
+            { coolingSystemType: "Cooling System Type" },
+            { case: "Case" }
         ]
 
         const numberFields = [
-            { "ram": "RAM" },
-            { "storageAmount": "Storage Amount" }
+            { ram: "RAM" },
+            { storageAmount: "Storage Amount" }
         ]
 
         let errors = {}

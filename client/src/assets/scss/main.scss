@@ -1,6 +1,7 @@
 @import "./foundation/settings";
 @import "~foundation-sites/scss/foundation";
 @include foundation-everything;
+
 // place global css here
 *,
 *::before,
@@ -13,16 +14,16 @@
   tab-size: 4;
 }
 
-.new-build-form{
+.new-build-form {
   display: grid;
   grid-template-columns: auto auto;
 }
 
-.form-input-label{
+.form-input-label {
   text-align: center;
 }
 
-#submit-build{
+#submit-build {
   display: block;
   margin-left: auto;
   margin-right: auto;
