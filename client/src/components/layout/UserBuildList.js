@@ -21,7 +21,7 @@ const UserBuildList = (props) => {
 
 
     const userBuilds = userBuildList.map((build) => {
-        return <li><BuildTile key={build.id} build={build} /></li>
+        return <li key={build.id}><BuildTile key={build.id} build={build} /></li>
     })
 
     return (
