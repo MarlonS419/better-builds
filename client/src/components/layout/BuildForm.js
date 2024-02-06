@@ -121,47 +121,49 @@ const BuildForm = (props) => {
         <>
             <h1>Submit your Build!</h1>
             <form onSubmit={submitBuild}>
-                <label htmlFor="title">Title:
-                    <input name="title" type="text" onChange={handleFormData} />
-                </label>
-                <label htmlFor="processor">Processor:
-                    <input name="processor" type="text" onChange={handleFormData} />
-                </label>
-                <label htmlFor="graphicsCard">Graphics Card:
-                    <input name="graphicsCard" type="text" onChange={handleFormData} />
-                </label>
-                <label htmlFor="ram">Ram:
-                    <input name="ram" type="text" onChange={handleFormData} />
-                </label>
-                <label htmlFor="motherboard">Motherboard:
-                    <input name="motherboard" type="text" onChange={handleFormData} />
-                </label>
-                <label htmlFor="storageAmount">Storage Amount:
-                    <input name="storageAmount" type="text" onChange={handleFormData} />
-                </label>
-                <label htmlFor="storageType">Storage Type:
-                    <label htmlFor="ssd">
-                        SSD: <input name="storageType" type="radio" value="SSD" onChange={handleFormData} />
+                <div className="new-build-form">
+                    <label htmlFor="title" className="form-input-label">Title:
+                        <input name="title" type="text" onChange={handleFormData} />
                     </label>
-                    <label htmlFor="HDD">
-                        HDD: <input name="storageType" type="radio" value="HDD" onChange={handleFormData} />
+                    <label htmlFor="processor" className="form-input-label">Processor:
+                        <input name="processor" type="text" onChange={handleFormData} />
                     </label>
-                </label>
-                <label htmlFor="coolingSystem">Cooling System:
-                    <input name="coolingSystem" type="text" onChange={handleFormData} />
-                </label>
-                <label htmlFor="coolingSystemType">Cooling System Type:
-                    <label htmlFor="fan">
-                        Fan: <input name="coolingSystemType" type="radio" value="Fan" onChange={handleFormData} />
+                    <label htmlFor="graphicsCard" className="form-input-label">Graphics Card:
+                        <input name="graphicsCard" type="text" onChange={handleFormData} />
                     </label>
-                    <label htmlFor="water">
-                        Water: <input name="coolingSystemType" type="radio" value="Water" onChange={handleFormData} />
+                    <label htmlFor="ram" className="form-input-label">Ram:
+                        <input name="ram" type="text" onChange={handleFormData} />
                     </label>
-                </label>
-                <label htmlFor="case">Case:
-                    <input name="case" type="text" onChange={handleFormData} />
-                </label>
-                <input type="submit" value="Submit Build!" />
+                    <label htmlFor="motherboard" className="form-input-label">Motherboard:
+                        <input name="motherboard" type="text" onChange={handleFormData} />
+                    </label>
+                    <label htmlFor="storageAmount" className="form-input-label">Storage Amount:
+                        <input name="storageAmount" type="text" onChange={handleFormData} />
+                    </label>
+                    <label htmlFor="storageType" className="form-input-label">Storage Type:
+                        <label htmlFor="ssd">
+                            SSD: <input name="storageType" type="radio" value="SSD" onChange={handleFormData} />
+                        </label>
+                        <label htmlFor="HDD">
+                            HDD: <input name="storageType" type="radio" value="HDD" onChange={handleFormData} />
+                        </label>
+                    </label>
+                    <label htmlFor="coolingSystem" className="form-input-label">Cooling System:
+                        <input name="coolingSystem" type="text" onChange={handleFormData} />
+                    </label>
+                    <label htmlFor="coolingSystemType" className="form-input-label">Cooling System Type:
+                        <label htmlFor="fan">
+                            Fan: <input name="coolingSystemType" type="radio" value="Fan" onChange={handleFormData} />
+                        </label>
+                        <label htmlFor="water">
+                            Water: <input name="coolingSystemType" type="radio" value="Water" onChange={handleFormData} />
+                        </label>
+                    </label>
+                    <label htmlFor="case" className="form-input-label">Case:
+                        <input name="case" type="text" onChange={handleFormData} />
+                    </label>
+                </div>
+                <input type="submit" value="Submit Build!" id="submit-build" />
             </form>
             <ErrorList errors={buildFormErrors} />
         </>

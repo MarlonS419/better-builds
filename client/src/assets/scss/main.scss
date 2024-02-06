@@ -12,3 +12,19 @@
   -moz-tab-size: 4;
   tab-size: 4;
 }
+
+.new-build-form{
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.form-input-label{
+  text-align: center;
+}
+
+#submit-build{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 35%;
+}
