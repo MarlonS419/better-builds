@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SignOutButton from "../authentication/SignOutButton";
-import AuthenticatedRoute from "../authentication/AuthenticatedRoute";
-import BuildForm from "./BuildForm";
 
 const TopBar = ({ user }) => {
   const unauthenticatedListItems = [
