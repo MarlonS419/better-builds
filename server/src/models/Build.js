@@ -34,18 +34,27 @@ class Build extends Model {
             }
         }
     }
+    static get relationMappings() {
+        const { User, Review } = require("./index.js")
 
-    static get relationMappings(){
-        const { User } = require("./index")
         return {
             user: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: User,
-                join:{
+                join: {
                     from: "builds.userId",
                     to: "users.id"
                 }
+            },
+            reviews: {
+                relation: Model.HasManyRelation,
+                modelClass: Review,
+                join: {
+                    from: "builds.id",
+                    to: "reviews.buildId"
+                }
             }
+            
         }
     }
 }
