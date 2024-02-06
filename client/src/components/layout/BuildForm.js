@@ -21,69 +21,68 @@ const BuildForm = (props) => {
 
     const [buildFormErrors, setBuildFormErrors] = useState({})
 
-    const [redirect, setRedirect] = useState(false)
-
-    const [newBuildID, setBuildID] = useState(0)
+    const [redirect, setRedirect] = useState({
+        redirectState: false,
+        newBuildID: undefined
+    })
 
     const handleFormData = (event) => {
-        setNewBuild(
-            {
-                ...newBuild,
-                [event.currentTarget.name]: event.currentTarget.value
-            }
+        setNewBuild({
+            ...newBuild,
+            [event.currentTarget.name]: event.currentTarget.value
+        }
         )
     }
 
     const validateFormOnFrontEnd = () => {
+        const requiredField = [
+            { title: "Title" },
+            { processor: "CPU" },
+            { graphicsCard: "GPU" },
+            { ram: "RAM" },
+            { motherboard: "Motherboard" },
+            { storageAmount: "Storage Amount" },
+            { storageType: "Storage Type" },
+            { coolingSystem: "Cooling System" },
+            { coolingSystemType: "Cooling System Type" },
+            { case: "Case" }
+        ]
+
+        const numberFields = [
+            { ram: "RAM" },
+            { storageAmount: "Storage Amount" }
+        ]
+
         let errors = {}
-        if (newBuild.title.trim() === "") {
-            errors = { ...errors, "Title": "is required!" }
+        for (const fieldObject of requiredField) {
+            for (const key in fieldObject) {
+                if (newBuild[key].trim() === "") {
+                    errors = { ...errors, [fieldObject[key]]: "is required!" }
+                }
+            }
         }
-        if (newBuild.processor.trim() === "") {
-            errors = { ...errors, "CPU": "is required!" }
+
+        for (const fieldObject of numberFields) {
+            for (const key in fieldObject) {
+                if (!parseInt(newBuild[key])) {
+                    errors = { ...errors, [fieldObject[key]]: "is required to be a number!" }
+                }
+            }
         }
-        if (newBuild.graphicsCard.trim() === "") {
-            errors = { ...errors, "GPU": "is required!" }
-        }
-        if (newBuild.ram.trim() === "") {
-            errors = { ...errors, "RAM": "is required!" }
-        } else if (!parseInt(newBuild.ram)) {
-            errors = { ...errors, "RAM": "needs to be a number!" }
-        }
-        if (newBuild.motherboard.trim() === "") {
-            errors = { ...errors, "Motherboard": "is required!" }
-        }
-        if (newBuild.storageAmount.trim() === "") {
-            errors = { ...errors, "Storage Amount": "is required!" }
-        } else if (!parseInt(newBuild.storageAmount)) {
-            errors = { ...errors, "Storage Amount": "needs to be a number!" }
-        }
-        if (newBuild.storageType.trim() === "") {
-            errors = { ...errors, "Storage Type": "is required!" }
-        }
-        if (newBuild.coolingSystem.trim() === "") {
-            errors = { ...errors, "Cooling System": "is required!" }
-        }
-        if (newBuild.coolingSystemType.trim() === "") {
-            errors = { ...errors, "Cooling System Type": "is required!" }
-        }
-        if (newBuild.case.trim() === "") {
-            errors = { ...errors, "Case": "is required!" }
-        }
-        if(!_.isEmpty(errors)){
+
+        if (!_.isEmpty(errors)) {
             setBuildFormErrors(errors)
             return false
-        }
-        else{
+        } else {
             return true
         }
     }
 
     const submitBuild = async (event) => {
         event.preventDefault()
-        if(validateFormOnFrontEnd()){
+        if (validateFormOnFrontEnd()) {
             try {
-                const newBuildFormResponse = await fetch("/api/v1/builds/new", {
+                const newBuildFormResponse = await fetch("/api/v1/builds", {
                     method: "POST",
                     headers: new Headers({ "Content-Type": "application/json" }),
                     body: JSON.stringify(newBuild)
@@ -93,17 +92,19 @@ const BuildForm = (props) => {
                         const serverData = await newBuildFormResponse.json()
                         const serverErrors = translateServerErrors(serverData.errors)
                         return setBuildFormErrors(serverErrors)
-                    }
-                    else {
+                    } else {
                         const errorMessage = `${newBuildFormResponse.status} - ${newBuildFormResponse.statusText}`
                         const error = new Error(errorMessage)
                         throw (error)
                     }
-                }
-                else {
+                } else {
                     const parsedResponse = await newBuildFormResponse.json()
-                    setBuildID(parseInt(parsedResponse.newBuild.id))
-                    setRedirect(true)
+                    const newBuildID = parsedResponse.newBuild.id
+                    const newRedirectState = {
+                        redirectState: true,
+                        newBuildID: newBuildID
+                    }
+                    setRedirect(newRedirectState)
                 }
             } catch (error) {
                 console.error(`Error in POST: ${error}`)
@@ -111,8 +112,8 @@ const BuildForm = (props) => {
         }
     }
 
-    if (redirect) {
-        const buildPage = `/builds/${newBuildID}`
+    if (redirect.redirectState) {
+        const buildPage = `/builds/${redirect.newBuildID}`
         return <Redirect push to={buildPage} />
     }
 
@@ -120,47 +121,49 @@ const BuildForm = (props) => {
         <>
             <h1>Submit your Build!</h1>
             <form onSubmit={submitBuild}>
-                <label htmlFor="title">Title:
-                    <input name="title" type="text" onChange={handleFormData} />
-                </label>
-                <label htmlFor="processor">Processor:
-                    <input name="processor" type="text" onChange={handleFormData} />
-                </label>
-                <label htmlFor="graphicsCard">Graphics Card:
-                    <input name="graphicsCard" type="text" onChange={handleFormData} />
-                </label>
-                <label htmlFor="ram">Ram:
-                    <input name="ram" type="text" onChange={handleFormData} />
-                </label>
-                <label htmlFor="motherboard">Motherboard:
-                    <input name="motherboard" type="text" onChange={handleFormData} />
-                </label>
-                <label htmlFor="storageAmount">Storage Amount:
-                    <input name="storageAmount" type="text" onChange={handleFormData} />
-                </label>
-                <label htmlFor="storageType">Storage Type:
-                    <label htmlFor="ssd">
-                        SSD: <input name="storageType" type="radio" value="SSD" onChange={handleFormData} />
+                <div className="new-build-form">
+                    <label htmlFor="title" className="form-input-label">Title:
+                        <input name="title" type="text" onChange={handleFormData} />
                     </label>
-                    <label htmlFor="HDD">
-                        HDD: <input name="storageType" type="radio" value="HDD" onChange={handleFormData} />
+                    <label htmlFor="processor" className="form-input-label">Processor:
+                        <input name="processor" type="text" onChange={handleFormData} />
                     </label>
-                </label>
-                <label htmlFor="coolingSystem">Cooling System:
-                    <input name="coolingSystem" type="text" onChange={handleFormData} />
-                </label>
-                <label htmlFor="coolingSystemType">Cooling System Type:
-                    <label htmlFor="fan">
-                        Fan: <input name="coolingSystemType" type="radio" value="Fan" onChange={handleFormData} />
+                    <label htmlFor="graphicsCard" className="form-input-label">Graphics Card:
+                        <input name="graphicsCard" type="text" onChange={handleFormData} />
                     </label>
-                    <label htmlFor="water">
-                        Water: <input name="coolingSystemType" type="radio" value="Water" onChange={handleFormData} />
+                    <label htmlFor="ram" className="form-input-label">Ram:
+                        <input name="ram" type="text" onChange={handleFormData} />
                     </label>
-                </label>
-                <label htmlFor="case">Case:
-                    <input name="case" type="text" onChange={handleFormData} />
-                </label>
-                <input type="submit" value="Submit Build!" />
+                    <label htmlFor="motherboard" className="form-input-label">Motherboard:
+                        <input name="motherboard" type="text" onChange={handleFormData} />
+                    </label>
+                    <label htmlFor="storageAmount" className="form-input-label">Storage Amount:
+                        <input name="storageAmount" type="text" onChange={handleFormData} />
+                    </label>
+                    <label htmlFor="storageType" className="form-input-label">Storage Type:
+                        <label htmlFor="ssd">
+                            SSD: <input name="storageType" type="radio" value="SSD" onChange={handleFormData} />
+                        </label>
+                        <label htmlFor="HDD">
+                            HDD: <input name="storageType" type="radio" value="HDD" onChange={handleFormData} />
+                        </label>
+                    </label>
+                    <label htmlFor="coolingSystem" className="form-input-label">Cooling System:
+                        <input name="coolingSystem" type="text" onChange={handleFormData} />
+                    </label>
+                    <label htmlFor="coolingSystemType" className="form-input-label">Cooling System Type:
+                        <label htmlFor="fan">
+                            Fan: <input name="coolingSystemType" type="radio" value="Fan" onChange={handleFormData} />
+                        </label>
+                        <label htmlFor="water">
+                            Water: <input name="coolingSystemType" type="radio" value="Water" onChange={handleFormData} />
+                        </label>
+                    </label>
+                    <label htmlFor="case" className="form-input-label">Case:
+                        <input name="case" type="text" onChange={handleFormData} />
+                    </label>
+                </div>
+                <input type="submit" value="Submit Build!" id="submit-build" />
             </form>
             <ErrorList errors={buildFormErrors} />
         </>

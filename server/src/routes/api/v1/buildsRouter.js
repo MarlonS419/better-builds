@@ -2,12 +2,12 @@ import express from "express";
 import { Build } from "../../../models/index.js"
 import objection from "objection"
 import cleanBuildForm from "../../../services/cleanBuildForm.js";
-const { ValidationError } = objection
 import BuildSerializer from "../../../serializers/BuildSerializer.js";
+const { ValidationError } = objection
 
 const buildsRouter = new express.Router()
 
-buildsRouter.post("/new", async (req, res) => {
+buildsRouter.post("/", async (req, res) => {
     const currentlyLoggedInUser = req.user
     const buildToAdd = req.body
     buildToAdd.userId = currentlyLoggedInUser.id
