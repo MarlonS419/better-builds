@@ -12,7 +12,7 @@ exports.up = async (knex) => {
     table.string("title").notNullable()
     table.string("processor")
     table.string("graphicsCard")
-    table.string("ram")
+    table.integer("ram")
     table.string("motherboard")
     table.integer("storageAmount")
     table.string("storageType")
