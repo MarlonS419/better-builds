@@ -1,11 +1,9 @@
-import { Review } from "../../models/index.js"
-import { Build } from "../../models/index.js"
-import { User } from "../../models/index.js"
+import { Review, Build, User } from "../../models/index.js"
 
 class ReviewSeeder {
     static async seed() {  
-        const build = await Build.query().findOne({title: "Seed Build 1"})
-        const user = await User.query().findOne({email: "test1@email.com"})
+        const build = await Build.query().findOne({ title: "Seed Build 1" })
+        const user = await User.query().findOne({ email: "test1@email.com" })
         const reviewData = [
             {
                 userId: user.id,
@@ -47,7 +45,7 @@ class ReviewSeeder {
 
         for (const review of reviewData) {
             const currentReview = await Review.query().findOne(review)
-            if(!currentReview) {
+            if (!currentReview) {
                 await Review.query().insert(review)
             }
         }

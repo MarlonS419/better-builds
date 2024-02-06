@@ -18,7 +18,7 @@ class UserSeeder {
       ]
   
       for (const user of usersData) {
-        const currentUser = await User.query().findOne({email: user.email})
+        const currentUser = await User.query().findOne({ email: user.email })
         if (!currentUser) {
           await User.query().insert(user)
         }

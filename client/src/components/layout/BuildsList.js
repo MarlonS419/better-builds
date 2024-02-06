@@ -15,9 +15,9 @@ const BuildsList = (props) => {
         }
     }
 
-    const buildTitles = currentBuilds.map((build) => {
+    const buildTiles = currentBuilds.map((build) => {
         return (
-            <li key={build.id}><BuildTile key={build.id} build={build} /></li>
+            <BuildTile build={build} />
         )
     })
 
@@ -27,7 +27,7 @@ const BuildsList = (props) => {
 
     return (
         <ul>
-            {buildTitles}
+            {buildTiles}
         </ul>
     )
 }

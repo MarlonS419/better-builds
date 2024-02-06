@@ -1,9 +1,8 @@
-import { Build } from "../../models/index.js"
-import { User } from "../../models/index.js"
+import { Build, User } from "../../models/index.js"
 
 class BuildSeeder {
     static async seed() {
-      const user = await User.query().findOne({email: "test1@email.com"})
+      const user = await User.query().findOne({ email: "test1@email.com" })
       const buildsData = [
         {
           title: "Seed Build 1",
@@ -48,7 +47,7 @@ class BuildSeeder {
 
       for (const build of buildsData) {
         const currentBuild = await Build.query().findOne(build)
-        if(!currentBuild) {
+        if (!currentBuild) {
             await Build.query().insert(build)
         }
     }
