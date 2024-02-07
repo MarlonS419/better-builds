@@ -1,6 +1,7 @@
 @import "./foundation/settings";
 @import "~foundation-sites/scss/foundation";
 @include foundation-everything;
+
 // place global css here
 *,
 *::before,
@@ -11,4 +12,36 @@
 :root {
   -moz-tab-size: 4;
   tab-size: 4;
+}
+
+.new-build-form {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.form-input-label {
+  text-align: center;
+}
+
+#submit-build {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 35%;
+}
+
+.build-show-title {
+  text-align: center;
+  outline: auto;
+  outline-color: aquamarine;
+  background-color: #26413C;
+}
+
+.build-show-list {
+  display: grid;
+  grid-template-columns: auto;
+  background: #982649;
+  color: #FF8F1F;
+  margin: 5px;
+  text-align: center;
 }

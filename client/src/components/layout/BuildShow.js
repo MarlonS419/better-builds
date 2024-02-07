@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react"
+import ReviewsList from "./ReviewsList"
 import ReviewForm from "./ReviewForm"
+
 const BuildShow = (props) => {
-    const [build, setBuild] = useState({})
-    
-    const buildId = props.match.params.id
+    const [build, setBuild] = useState({ reviews: [] })
+
+    const id = props.match.params.id
 
     const getBuild = async () => {
         try{
@@ -14,7 +16,7 @@ const BuildShow = (props) => {
                 throw error
             }
             const body = await response.json()
-            setBuild(body.selectedBuild)
+            setBuild(body.build)
         } catch(error) {
             console.log(error)
         }
@@ -57,8 +59,8 @@ const BuildShow = (props) => {
 
     return (
         <>
-            <h3>{build.title}</h3>
-            <ul>
+            <h3 className="build-show-title" >{build.title}</h3>
+            <ul className="build-show-list">
                 <li>Case: {build.case}</li>
                 <li>GPU: {build.graphicsCard}</li>
                 <li>Motherboard: {build.motherboard}</li>
@@ -69,6 +71,7 @@ const BuildShow = (props) => {
                 <li>Cooling System: {build.coolingSystem}</li>
                 <li>Cooling System Type: {build.coolingSystemType}</li>
             </ul>
+            <ReviewsList reviews={build.reviews}/>
             <ReviewForm submitReview={submitReview}/>
         </>
     )

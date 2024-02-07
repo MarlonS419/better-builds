@@ -8,7 +8,9 @@ import RegistrationForm from "./registration/RegistrationForm";
 import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";
 import BuildsList from "./layout/BuildsList";
+import BuildForm from "./layout/BuildForm";
 import BuildShow from "./layout/BuildShow";
+import AuthenticatedRoute from "./authentication/AuthenticatedRoute"
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -34,6 +36,7 @@ const App = (props) => {
         </Route>
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
+        <AuthenticatedRoute exact path="/builds/new" component={BuildForm} user={currentUser} />
         <Route exact path="/builds/:id" component={BuildShow} />
       </Switch>
     </Router>

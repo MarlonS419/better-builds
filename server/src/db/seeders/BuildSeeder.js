@@ -1,11 +1,12 @@
-import { Build } from "../../models/index.js"
+import { Build, User } from "../../models/index.js"
 
 class BuildSeeder {
     static async seed() {
+      const user = await User.query().findOne({ email: "test1@email.com" })
       const buildsData = [
         {
           title: "Seed Build 1",
-          userId: "1",
+          userId: user.id,
           processor: "intel i5",
           graphicsCard: "nvidia 3070",
           ram: "16",
@@ -18,7 +19,7 @@ class BuildSeeder {
         },
         {
           title: "Seed Build 2",
-          userId: "2",
+          userId: user.id,
           processor: "intel i6",
           graphicsCard: "nvidia 3080",
           ram: "8",
@@ -31,7 +32,7 @@ class BuildSeeder {
         },
         {
           title: "Seed Build 3",
-          userId: "3",
+          userId: user.id,
           processor: "intel i8",
           graphicsCard: "nvidia 3090",
           ram: "32",
@@ -45,8 +46,11 @@ class BuildSeeder {
       ]
 
       for (const build of buildsData) {
-        await Build.query().insert(build)
-      }
+        const currentBuild = await Build.query().findOne(build)
+        if (!currentBuild) {
+            await Build.query().insert(build)
+        }
+    }
   }
 }
 
