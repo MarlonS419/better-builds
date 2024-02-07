@@ -3,24 +3,23 @@ import { Build, Review } from "../../../models/index.js"
 import BuildSerializer from "../../../serializers/BuildSerializer.js";
 import objection from "objection"
 const { ValidationError } = objection
-import cleanUserInput from "../../../services/cleanUserInput.js";
+import cleanBuildForm from "../../../services/cleanBuildForm.js";
 
 const buildsReviewsRouter = new express.Router({mergeParams: true})
 
 // MOVE TO BUILD REVIEWS ROUTER
 buildsReviewsRouter.post("/", async (req, res) => {
-    const { body } = req
-    const formInput = cleanUserInput(body)
-    const { rating, comment } = formInput
-
-    const buildId = req.params.id
     
     const currentlyLoggedInUser = req.user
     const submittedReview = req.body
+
+    submittedReview.buildId = req.params.id
     submittedReview.userId = currentlyLoggedInUser.id
 
     try {
-        const reviewToAdd = await Review.query().insert(submittedReview)
+        const cleanedFormData = cleanBuildForm(submittedReview)
+        const reviewToAdd = await Review.query().insert(cleanedFormData)
+        console.log("reviewToAdd", reviewToAdd)
         return res.status(201).json({ reviewToAdd })
     } catch (error) {
         console.log(error)

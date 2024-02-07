@@ -9,22 +9,23 @@ const ReviewForm = (props) => {
         comment: ""
     })
 
-    const [errors, setErrors] = useState({})
-
+    const errors = props.errors
 
     const handleReviewForm = (event) => {
         setNewReview(
             {...newReview,
             [event.currentTarget.name]: event.currentTarget.value}
-            )}
+        )
+    }
 
 
     const handleSubmit = (event) => {
         event.preventDefault()
-
-
-        
+        if (newReview.rating){
         props.postReview(newReview)
+        } else {
+            
+        }
     }
             
     return (

@@ -6,6 +6,7 @@ import translateServerErrors from "../../services/translateServerErrors.js"
 const BuildShow = (props) => {
     const [build, setBuild] = useState({ reviews: [] })
     
+    const [reviewErrors, setReviewErrors] = useState({})
 
     const buildId = props.match.params.id
 
@@ -29,19 +30,20 @@ const BuildShow = (props) => {
     }, [])
 
 
-    const postReview = async (newBuildData) => {
-   
+    const postReview = async (event) => {
+        event.preventDefault()
         try {
             const response = await fetch(`/api/v1/builds/${buildId}/reviews`, {
                 method: "POST",
                 headers: new Headers({ "Content-Type": "application/json" }),
-                body: JSON.stringify(newBuildData)
+                body: JSON.stringify(newReview)
             })
+            console.log("response", response)
             if (!response.ok) {
                 if(response.status === 422) {
                     const body = await response.json()
                     const newErrors = translateServerErrors(body.errors)
-                    return setErrors(newErrors)
+                    return setReviewErrors(newErrors)
                 } else {
                     const errorMessage = `${response.status} (${response.statusText})`
                     const error = new Error(errorMessage)
@@ -49,12 +51,15 @@ const BuildShow = (props) => {
                 }
             } else {
                 const body = await response.json()
+                const updatedReviewArray = build.reviews.concat(body.reviewToAdd)
+                
+                console.log("Body", body)
+                setBuild({...build, reviews: updatedReviewArray})
                 // add the review to the existing reviews
                     // existing reviews are at build.reviews
 
 
 
-                // const updatedReview = newReview.reviews.concat(body.review)
                 // setErrors([])
                 // setNewReview({...newReview, reviews: updatedReview})
             }
@@ -79,7 +84,7 @@ const BuildShow = (props) => {
                 <li>Cooling System Type: {build.coolingSystemType}</li>
             </ul>
             <ReviewsList reviews={build.reviews}/>
-            <ReviewForm postReview={postReview}/>
+            <ReviewForm postReview={postReview} errors={reviewErrors}/>
         </>
     )
 }
