@@ -9,8 +9,8 @@ const BuildsList = (props) => {
     const onProfilePage = props.onProfilePage
     let buildTiles
     if(onProfilePage){
-        const userBuilds = props.buildsList
-        buildTiles = userBuilds.map((build) => {
+        setCurrentBuilds(props.buildsList)
+        buildTiles = currentBuilds.map((build) => {
             return (
                 <>
                     <BuildTile key={build.id} build={build} />
