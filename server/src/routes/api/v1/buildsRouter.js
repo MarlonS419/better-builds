@@ -37,10 +37,20 @@ buildsRouter.get("/:id", async (req, res) => {
     try{
         const selectedBuild = await Build.query().findById(id)
         const serializedBuild = await BuildSerializer.getBuildDetails(selectedBuild)
-        res.status(200).json({ build: serializedBuild })
+        return res.status(200).json({ build: serializedBuild })
     } catch(error) {
-        res.status(500).json({errors: error})
+        return res.status(500).json({errors: error})
     }
 })
 
+buildsRouter.delete("/:id", async (req,res) => {
+    const id = req.params.id
+    try {
+        const selectedBuild = await Build.query().findById(id).delete()
+        return res.status(200).json({delete: selectedBuild})
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({errors: error})
+    }
+})
 export default buildsRouter

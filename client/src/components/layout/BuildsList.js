@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import BuildTile from "./BuildTile"
+import DeleteButton from "./DeleteButton"
 
 const BuildsList = (props) => {
 
@@ -10,7 +11,12 @@ const BuildsList = (props) => {
     if(onProfilePage){
         const userBuilds = props.buildsList
         buildTiles = userBuilds.map((build) => {
-            return <BuildTile key={build.id} build={build} />
+            return (
+                <>
+                    <BuildTile key={build.id} build={build} />
+                    <DeleteButton dataToDelete={build.id}/>
+                </>
+            )
         })
     } else {        
         const getBuilds = async () => {
