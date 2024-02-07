@@ -4,10 +4,12 @@ import BuildsList from "./BuildsList";
 import ReviewsList from "./ReviewsList"
 
 const UserShow = ({user}) => {
+    
     const [currentUserData, setUserData] = useState({
         buildsList: [],
         reviewsList: []
     })
+
     const userInfo = UserSerializer.serializeUser(user)
     const createdAt = new Date(userInfo.createdAt)
     const formattedDate = createdAt.toLocaleDateString()
@@ -16,16 +18,12 @@ const UserShow = ({user}) => {
     const getUserData = async () => {
         try{
             const fetchedUserData = await fetch(`/api/v1/user/${userID}`)
-            console.log(fetchedUserData)
             const parsedUserData = await fetchedUserData.json()
-            console.log("Current User Data: ", parsedUserData)
             setUserData(parsedUserData)
         } catch (error) {
             console.error(error)
         }
     }
-
-    console.log("currentUserData:", currentUserData)
 
     useEffect(() => {
         getUserData()
