@@ -29,3 +29,19 @@
   margin-right: auto;
   width: 35%;
 }
+
+.build-show-title {
+  text-align: center;
+  outline: auto;
+  outline-color: aquamarine;
+  background-color: #26413C;
+}
+
+.build-show-list {
+  display: grid;
+  grid-template-columns: auto;
+  background: #982649;
+  color: #FF8F1F;
+  margin: 5px;
+  text-align: center;
+}

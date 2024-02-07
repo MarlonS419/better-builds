@@ -27,8 +27,8 @@ const BuildShow = (props) => {
 
     return (
         <>
-            <h3>{build.title}</h3>
-            <ul>
+            <h3 className="build-show-title" >{build.title}</h3>
+            <ul className="build-show-list">
                 <li>Case: {build.case}</li>
                 <li>GPU: {build.graphicsCard}</li>
                 <li>Motherboard: {build.motherboard}</li>
