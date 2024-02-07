@@ -3,6 +3,7 @@ import { Build, Review } from "../../../models/index.js"
 import BuildSerializer from "../../../serializers/BuildSerializer.js";
 import objection from "objection"
 const { ValidationError } = objection
+import cleanUserInput from "../../../services/cleanUserInput.js";
 
 const buildsReviewsRouter = new express.Router({mergeParams: true})
 
@@ -19,9 +20,10 @@ buildsReviewsRouter.post("/", async (req, res) => {
     submittedReview.userId = currentlyLoggedInUser.id
 
     try {
-        const reviewToAdd = await Review.query().insert({ rating, comment, buildId, userId })
+        const reviewToAdd = await Review.query().insert(submittedReview)
         return res.status(201).json({ reviewToAdd })
     } catch (error) {
+        console.log(error)
         if(error instanceof ValidationError){
             return res.status(422).json({errors: error.data})
         }

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react"
 import ReviewsList from "./ReviewsList"
 import ReviewForm from "./ReviewForm"
+import translateServerErrors from "../../services/translateServerErrors.js"
 
 const BuildShow = (props) => {
     const [build, setBuild] = useState({ reviews: [] })
+    
 
-    const id = props.match.params.id
+    const buildId = props.match.params.id
 
     const getBuild = async () => {
         try{

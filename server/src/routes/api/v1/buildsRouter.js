@@ -4,7 +4,6 @@ import objection from "objection"
 import cleanBuildForm from "../../../services/cleanBuildForm.js";
 import BuildSerializer from "../../../serializers/BuildSerializer.js";
 import buildsReviewsRouter from "./buildsReviewsRouter.js"
-import objection from "objection"
 const { ValidationError } = objection
 
 const buildsRouter = new express.Router()
