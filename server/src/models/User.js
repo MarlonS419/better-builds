@@ -34,20 +34,6 @@ class User extends uniqueFunc(Model) {
     };
   }
 
-  static get relationMappings(){
-    const { Build } = require("./index")
-    return {
-      builds: {
-        relation: Model.HasManyRelation,
-        modelClass: Build,
-        join: {
-          from: "users.id",
-          to: "builds.userId"
-        }
-      }
-    }
-  }
-
   $formatJson(json) {
     const serializedJson = super.$formatJson(json);
 
@@ -57,6 +43,7 @@ class User extends uniqueFunc(Model) {
 
     return serializedJson;
   }
+  
   static get relationMappings() {
     const { Build, Review } = require("./index.js")
 
