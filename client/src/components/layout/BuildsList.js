@@ -7,12 +7,12 @@ const BuildsList = (props) => {
 
     const onProfilePage = props.onProfilePage
     let buildTiles
-    if(onProfilePage){
+    if (onProfilePage) {
         const userBuilds = props.buildsList
         buildTiles = userBuilds.map((build) => {
             return <BuildTile key={build.id} build={build} />
         })
-    } else {        
+    } else {
         const getBuilds = async () => {
             try {
                 const response = await fetch("/api/v1/builds/")
@@ -22,13 +22,13 @@ const BuildsList = (props) => {
                 console.error(`Error Fetching Build List: ${error}`)
             }
         }
-    
+
         buildTiles = currentBuilds.map((build) => {
             return (
                 <BuildTile key={build.id} build={build} />
             )
         })
-    
+
         useEffect(() => {
             getBuilds()
         }, [])

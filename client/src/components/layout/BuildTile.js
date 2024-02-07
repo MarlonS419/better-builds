@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 
 const BuildTile = ({ build }) => {
     const { id } = build
-    const { userId } = build
 
     return (
         <li>
