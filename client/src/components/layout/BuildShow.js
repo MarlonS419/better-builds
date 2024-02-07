@@ -29,13 +29,13 @@ const BuildShow = (props) => {
     }, [])
 
 
-    const submitReview = async (event) => {
-        event.preventDefault()
+    const postReview = async (newBuildData) => {
+   
         try {
             const response = await fetch(`/api/v1/builds/${buildId}/reviews`, {
                 method: "POST",
                 headers: new Headers({ "Content-Type": "application/json" }),
-                body: JSON.stringify(newReview)
+                body: JSON.stringify(newBuildData)
             })
             if (!response.ok) {
                 if(response.status === 422) {
@@ -49,9 +49,14 @@ const BuildShow = (props) => {
                 }
             } else {
                 const body = await response.json()
-                const updatedReview = newReview.reviews.concat(body.review)
-                setErrors([])
-                setNewReview({...newReview, reviews: updatedReview})
+                // add the review to the existing reviews
+                    // existing reviews are at build.reviews
+
+
+
+                // const updatedReview = newReview.reviews.concat(body.review)
+                // setErrors([])
+                // setNewReview({...newReview, reviews: updatedReview})
             }
         } catch(error) {
             console.log(error)
@@ -74,7 +79,7 @@ const BuildShow = (props) => {
                 <li>Cooling System Type: {build.coolingSystemType}</li>
             </ul>
             <ReviewsList reviews={build.reviews}/>
-            <ReviewForm submitReview={submitReview}/>
+            <ReviewForm postReview={postReview}/>
         </>
     )
 }

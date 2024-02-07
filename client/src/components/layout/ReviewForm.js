@@ -1,6 +1,5 @@
 import React from "react"
 import ErrorList from "./ErrorList"
-import translateServerErrors from "../../services/translateServerErrors.js"
 const { useState } = require("react")
 
 
@@ -10,7 +9,7 @@ const ReviewForm = (props) => {
         comment: ""
     })
 
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState({})
 
 
     const handleReviewForm = (event) => {
@@ -18,12 +17,21 @@ const ReviewForm = (props) => {
             {...newReview,
             [event.currentTarget.name]: event.currentTarget.value}
             )}
+
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+
+
+        
+        props.postReview(newReview)
+    }
             
     return (
         <>
             <h3>Submit a Review</h3>
             <ErrorList errors={errors} />
-            <form onSubmit={props.submitReview}>
+            <form onSubmit={handleSubmit}>
                 <label htmlFor="rating">Rating:
                     <label htmlFor="1">
                         1:<input name="rating" type="radio" value="1" onChange={handleReviewForm}/>
