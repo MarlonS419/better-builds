@@ -1,59 +1,29 @@
 import React from "react"
+import ErrorList from "./ErrorList"
+import translateServerErrors from "../../services/translateServerErrors.js"
 const { useState } = require("react")
 
 
-const ReviewForm = props => {
+const ReviewForm = (props) => {
     const [newReview, setNewReview] = useState({
         rating: null,
         comment: ""
     })
 
-    const [reviewFormErrors, setReviewFormErrors] = useState([])
+    const [errors, setErrors] = useState([])
 
-    const submitReview = async (event) => {
-        event.preventDefault()
-        try {
-            const newReviewFormResponse = await fetch("/api/v1/builds/id", {
-                method: "POST",
-                headers: new Headers({ "Content-Type": "application/json" }),
-                body: JSON.stringify(newReview)
-            })
-            if (!newReviewFormResponse.ok) {
-                if (newReviewFormResponse.status === 422) {
-                    const serverData = await newReviewFormResponse.json()
-                    const serverErrors = translateServerErrors(serverData.errors)
-                    const cleanedServerErrors = cleanReviewFormErrors(serverErrors)
-                    return setReviewFormErrors(cleanedServerErrors)
-                }
-                else {
-                    const errorMessage = `${newReviewFormResponse.status} - ${newReviewFormResponse.statusText}`
-                    const error = new Error(errorMessage)
-                    throw (error)
-                }
-            }
-            else {
-                const body = await response.json()
-                const updatedReview = newReview.reviews.concat(body.review)
-                setEnchantedForest({...newReview, reviews: updatedReview})
-            }
-        } catch (error) {
-            console.error(`Error in POST: ${error}`)
-        }
-    }
 
     const handleReviewForm = (event) => {
         setNewReview(
             {...newReview,
-                [event.currentTarget.name]: event.currentTarget.value}
-                )
-            }
-            console.log(newReview)
+            [event.currentTarget.name]: event.currentTarget.value}
+            )}
             
     return (
         <>
             <h3>Submit a Review</h3>
-            {/* <ErrorList errors={reviewFormErrors} /> */}
-            <form onSubmit={submitReview}>
+            <ErrorList errors={errors} />
+            <form onSubmit={props.submitReview}>
                 <label htmlFor="rating">Rating:
                     <label htmlFor="1">
                         1:<input name="rating" type="radio" value="1" onChange={handleReviewForm}/>

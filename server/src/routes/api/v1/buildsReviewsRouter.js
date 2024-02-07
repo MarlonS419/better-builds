@@ -4,15 +4,22 @@ import BuildSerializer from "../../../serializers/BuildSerializer.js";
 import objection from "objection"
 const { ValidationError } = objection
 
-const reviewRouter = new express.Router()
+const buildsReviewsRouter = new express.Router({mergeParams: true})
 
 // MOVE TO BUILD REVIEWS ROUTER
-reviewRouter.post("/", async (req, res) => {
+buildsReviewsRouter.post("/", async (req, res) => {
+    const { body } = req
+    const formInput = cleanUserInput(body)
+    const { rating, comment } = formInput
+
+    const buildId = req.params.id
+    
     const currentlyLoggedInUser = req.user
-    const reviewToAdd = req.body
-    reviewToAdd.userId = currentlyLoggedInUser.id
+    const submittedReview = req.body
+    submittedReview.userId = currentlyLoggedInUser.id
+
     try {
-        await Review.query().insert(reviewToAdd)
+        const reviewToAdd = await Review.query().insert({ rating, comment, buildId, userId })
         return res.status(201).json({ reviewToAdd })
     } catch (error) {
         if(error instanceof ValidationError){
@@ -22,4 +29,4 @@ reviewRouter.post("/", async (req, res) => {
     }
 })
 
-export default reviewRouter
+export default buildsReviewsRouter
