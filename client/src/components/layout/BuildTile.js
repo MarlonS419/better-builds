@@ -9,11 +9,11 @@ const BuildTile = ({ build }) => {
     const { userId } = build
 
     return (
-        <>
+        <li>
             <Link to={`/builds/${id}`}>
                 Title: {build.title}
             </Link>
-        </>
+        </li>
     )
 }
 
