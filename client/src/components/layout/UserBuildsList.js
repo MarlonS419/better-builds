@@ -3,7 +3,6 @@ import UserBuildTile from "./BuildTile"
 import DeleteBuildButton from "./DeleteBuildButton";
 
 const UserBuildsList = ({ buildsList, currentUserData, setUserData }) => {
-
     const userBuildTiles = buildsList.map((build) => {
         return (
             <li key={build.id}>
@@ -16,9 +15,9 @@ const UserBuildsList = ({ buildsList, currentUserData, setUserData }) => {
     })
 
     return (
-        <ul>
+        <div>
             {userBuildTiles}
-        </ul>
+        </div>
     )
 }
 
