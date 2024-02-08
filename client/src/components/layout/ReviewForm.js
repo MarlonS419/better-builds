@@ -8,8 +8,7 @@ const ReviewForm = (props) => {
         rating: null,
         comment: ""
     })
-
-    const errors = props.errors
+    const {reviewErrors, setReviewErrors} = props
 
     const handleReviewForm = (event) => {
         setNewReview(
@@ -17,21 +16,37 @@ const ReviewForm = (props) => {
             [event.currentTarget.name]: event.currentTarget.value}
         )
     }
+    
+    let errors = {}
+    const validateReviewForm = () => {
+        const requiredFields = [{rating: "Rating"}]
 
+        for (const fieldObject of requiredFields) {
+            for (const key in fieldObject) {
+                if (newReview[key] === null) {
+                    errors = {...errors, [fieldObject[key]]: "is required!"}
+                }
+            }
+        }
+        if (!_.isEmpty(errors)) {
+            setReviewErrors(errors)
+            return false
+        } else {
+            return true
+        }
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault()
         if (newReview.rating){
         props.postReview(newReview)
-        } else {
-            
         }
     }
             
     return (
         <>
             <h3>Submit a Review</h3>
-            <ErrorList errors={errors} />
+            <ErrorList errors={reviewErrors} />
             <form onSubmit={handleSubmit}>
                 <label htmlFor="rating">Rating:
                     <label htmlFor="1">

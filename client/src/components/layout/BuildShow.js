@@ -84,7 +84,7 @@ const BuildShow = (props) => {
                 <li>Cooling System Type: {build.coolingSystemType}</li>
             </ul>
             <ReviewsList reviews={build.reviews}/>
-            <ReviewForm postReview={postReview} errors={reviewErrors}/>
+            <ReviewForm postReview={postReview} reviewErrors={reviewErrors} setReviewErrors={setReviewErrors} />
         </>
     )
 }
