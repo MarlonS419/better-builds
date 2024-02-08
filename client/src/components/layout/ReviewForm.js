@@ -1,14 +1,13 @@
 import React from "react"
 import ErrorList from "./ErrorList"
+import translateServerErrors from "../../services/translateServerErrors.js"
 const { useState } = require("react")
 
-
-const ReviewForm = (props) => {
+const ReviewForm = ({buildId, build, setBuild}) => {
     const [newReview, setNewReview] = useState({
         rating: null,
         comment: ""
     })
-    const {reviewErrors, setReviewErrors} = props
 
     const handleReviewForm = (event) => {
         setNewReview(
@@ -17,13 +16,15 @@ const ReviewForm = (props) => {
         )
     }
     
-    let errors = {}
+    const [reviewErrors, setReviewErrors] = useState({})
+    
     const validateReviewForm = () => {
         const requiredFields = [{rating: "Rating"}]
-
+        
+        let errors = {}
         for (const fieldObject of requiredFields) {
             for (const key in fieldObject) {
-                if (newReview[key] === null) {
+                if (!newReview[key]) {
                     errors = {...errors, [fieldObject[key]]: "is required!"}
                 }
             }
@@ -36,18 +37,42 @@ const ReviewForm = (props) => {
         }
     }
 
-    const handleSubmit = (event) => {
+    const postReview = async (event) => {
         event.preventDefault()
-        if (newReview.rating){
-        props.postReview(newReview)
+        if (validateReviewForm()) {
+            try {
+                const response = await fetch(`/api/v1/builds/${buildId}/reviews`, {
+                    method: "POST",
+                    headers: new Headers({ "Content-Type": "application/json" }),
+                    body: JSON.stringify(newReview)
+                })
+                if (!response.ok) {
+                    if(response.status === 422) {
+                        const body = await response.json()
+                        const newErrors = translateServerErrors(body.errors)
+                        return setReviewErrors(newErrors)
+                    } else {
+                        const errorMessage = `${response.status} (${response.statusText})`
+                        const error = new Error(errorMessage)
+                        throw(error)
+                    }
+                } else {
+                    const body = await response.json()
+                    const updatedReviewArray = build.reviews.concat(body.reviewToAdd)
+                    
+                    setBuild({...build, reviews: updatedReviewArray})
+                }
+            } catch(error) {
+                console.error(`Error in fetch: ${error.message}`)
+            }
         }
     }
-            
+
     return (
         <>
             <h3>Submit a Review</h3>
             <ErrorList errors={reviewErrors} />
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={postReview}>
                 <label htmlFor="rating">Rating:
                     <label htmlFor="1">
                         1:<input name="rating" type="radio" value="1" onChange={handleReviewForm}/>
@@ -73,4 +98,5 @@ const ReviewForm = (props) => {
         </>
     )
 }
+
 export default ReviewForm

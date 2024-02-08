@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react"
 import ReviewsList from "./ReviewsList"
 import ReviewForm from "./ReviewForm"
-import translateServerErrors from "../../services/translateServerErrors.js"
+import getCurrentUser from "../../services/getCurrentUser"
 
 const BuildShow = (props) => {
     const [build, setBuild] = useState({ reviews: [] })
     
-    const [reviewErrors, setReviewErrors] = useState({})
-
     const buildId = props.match.params.id
-
+    
     const getBuild = async () => {
         try{
             const response = await fetch(`/api/v1/builds/${buildId}`)
@@ -25,48 +23,24 @@ const BuildShow = (props) => {
         }
     }
     
+    const [currentUser, setCurrentUser] = useState(undefined);
+    const fetchCurrentUser = async () => {
+      try {
+        const user = await getCurrentUser()
+        setCurrentUser(user)
+      } catch(err) {
+        setCurrentUser(null)
+      }
+    }
+
     useEffect(() => {
         getBuild()
+        fetchCurrentUser()
     }, [])
 
-
-    const postReview = async (event) => {
-        event.preventDefault()
-        try {
-            const response = await fetch(`/api/v1/builds/${buildId}/reviews`, {
-                method: "POST",
-                headers: new Headers({ "Content-Type": "application/json" }),
-                body: JSON.stringify(newReview)
-            })
-            console.log("response", response)
-            if (!response.ok) {
-                if(response.status === 422) {
-                    const body = await response.json()
-                    const newErrors = translateServerErrors(body.errors)
-                    return setReviewErrors(newErrors)
-                } else {
-                    const errorMessage = `${response.status} (${response.statusText})`
-                    const error = new Error(errorMessage)
-                    throw(error)
-                }
-            } else {
-                const body = await response.json()
-                const updatedReviewArray = build.reviews.concat(body.reviewToAdd)
-                
-                console.log("Body", body)
-                setBuild({...build, reviews: updatedReviewArray})
-                // add the review to the existing reviews
-                    // existing reviews are at build.reviews
-
-
-
-                // setErrors([])
-                // setNewReview({...newReview, reviews: updatedReview})
-            }
-        } catch(error) {
-            console.log(error)
-            console.error(`Error in fetch: ${error.message}`)
-        }
+    let reviewForm = null
+    if (currentUser) {
+        reviewForm =  (<ReviewForm buildId={buildId} build={build} setBuild={setBuild} />)
     }
 
     return (
@@ -84,7 +58,7 @@ const BuildShow = (props) => {
                 <li>Cooling System Type: {build.coolingSystemType}</li>
             </ul>
             <ReviewsList reviews={build.reviews}/>
-            <ReviewForm postReview={postReview} reviewErrors={reviewErrors} setReviewErrors={setReviewErrors} />
+            {reviewForm}
         </>
     )
 }
