@@ -1,19 +1,18 @@
-import React from "react";
-
+import React from "react"
+import UserReviewTile from "./ReviewTile"
 
 const UserReviewsList = (props) => {
-    console.log(props.user)
-    const currentUser = props.user
-    const userID = currentUser.id
-    try{
-        
-    } catch(error){
-        console.error(error)
-    }
-    return (
-        <h1>Hi from user reviews!</h1>
-    )
 
+        const userReviews = props.reviewsList
+        const userReviewTiles = userReviews.map((review) => {
+            return <UserReviewTile key={review.id} review={review} />
+        })
+
+    return (
+        <ul>
+            {userReviewTiles}
+        </ul>
+    )
 }
 
 export default UserReviewsList

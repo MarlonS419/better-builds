@@ -13,7 +13,6 @@ const TopBar = ({ user }) => {
       </Link>
     </li>,
   ];
-  
 
   const authenticatedListItems = [
     <li key="my-profile">

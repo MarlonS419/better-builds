@@ -1,31 +1,28 @@
 import React, { useState, useEffect } from "react";
-import UserSerializer from "../../../../server/src/serializers/UserSerializer";
-import BuildsList from "./BuildsList";
-import ReviewsList from "./ReviewsList"
+import UserBuildsList from "./UserBuildsList";
+import UserReviewsList from "./UserReviewsList"
 
 const UserShow = ({user}) => {
+
     const [currentUserData, setUserData] = useState({
+        userInfo: {},
         buildsList: [],
         reviewsList: []
     })
-    const userInfo = UserSerializer.serializeUser(user)
-    const createdAt = new Date(userInfo.createdAt)
+
+    const createdAt = new Date(user.createdAt)
     const formattedDate = createdAt.toLocaleDateString()
-    const userID = userInfo.id
+    const userID = user.id
 
     const getUserData = async () => {
         try{
             const fetchedUserData = await fetch(`/api/v1/user/${userID}`)
-            console.log(fetchedUserData)
             const parsedUserData = await fetchedUserData.json()
-            console.log("Current User Data: ", parsedUserData)
             setUserData(parsedUserData)
         } catch (error) {
             console.error(error)
         }
     }
-
-    console.log("currentUserData:", currentUserData)
 
     useEffect(() => {
         getUserData()
@@ -33,16 +30,16 @@ const UserShow = ({user}) => {
 
     return (
         <>
-            <h1>My profile</h1>
+            <h1>My Profile</h1>
             <ul>
-                <li>username</li>
-                <li>{userInfo.email}</li>
+                <li>Username</li>
+                <li>{currentUserData.userInfo.email}</li>
                 <li>User since: {formattedDate}</li>
             </ul>
             <h3>My Builds</h3>
-            <BuildsList onProfilePage={true} buildsList={currentUserData.buildsList}/>
+            <UserBuildsList buildsList={currentUserData.buildsList}/>
             <h3>My Reviews</h3>
-            <ReviewsList onProfilePage={true} reviews={currentUserData.reviewsList} />
+            <UserReviewsList reviewsList={currentUserData.reviewsList} />
         </>
     )
 }

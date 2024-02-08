@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-const BuildTile = ({ build }) => {
+const UserBuildTile = ({ build }) => {
     const { id } = build
 
     return (
@@ -13,4 +13,4 @@ const BuildTile = ({ build }) => {
     )
 }
 
-export default BuildTile
+export default UserBuildTile

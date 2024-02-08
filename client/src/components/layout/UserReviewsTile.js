@@ -1,6 +1,6 @@
 import React from "react"
 
-const ReviewTile = ({review}) => {
+const UserReviewTile = ({review}) => {
     return (
         <>
             <p>Rating: {review.rating}/5</p> 
@@ -10,4 +10,4 @@ const ReviewTile = ({review}) => {
     )
 }
 
-export default ReviewTile
+export default UserReviewTile
