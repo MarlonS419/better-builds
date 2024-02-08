@@ -4,10 +4,9 @@ import translateServerErrors from "../../services/translateServerErrors.js"
 const { useState } = require("react")
 
 const ReviewForm = ({buildId, build, setBuild}) => {
-    const [newReview, setNewReview] = useState({
-        rating: null,
-        comment: ""
-    })
+    const emptyFieldsObject = { rating: null, comment: "" }
+    const [newReview, setNewReview] = useState(emptyFieldsObject)
+    console.log(newReview)
 
     const handleReviewForm = (event) => {
         setNewReview(
@@ -59,7 +58,7 @@ const ReviewForm = ({buildId, build, setBuild}) => {
                 } else {
                     const body = await response.json()
                     const updatedReviewArray = build.reviews.concat(body.reviewToAdd)
-                    
+                    setNewReview(emptyFieldsObject)
                     setBuild({...build, reviews: updatedReviewArray})
                 }
             } catch(error) {
@@ -67,31 +66,23 @@ const ReviewForm = ({buildId, build, setBuild}) => {
             }
         }
     }
+    const options = [1, 2, 3, 4, 5]
+    const radioButtons = options.map((optionNumber) => {
+        return(
+            <label htmlFor={optionNumber}>
+                {optionNumber}:<input name="rating" type="radio" checked={parseInt(newReview.rating) === optionNumber} value={optionNumber} onChange={handleReviewForm}/>
+            </label>
+        )
+    })
 
     return (
         <>
             <h3>Submit a Review</h3>
             <ErrorList errors={reviewErrors} />
             <form onSubmit={postReview}>
-                <label htmlFor="rating">Rating:
-                    <label htmlFor="1">
-                        1:<input name="rating" type="radio" value="1" onChange={handleReviewForm}/>
-                    </label>
-                    <label htmlFor="2">
-                        2:<input name="rating" type="radio" value="2" onChange={handleReviewForm}/>
-                    </label>
-                    <label htmlFor="3">
-                        3:<input name="rating" type="radio" value="3" onChange={handleReviewForm}/>
-                    </label>
-                    <label htmlFor="4">
-                        4:<input name="rating" type="radio" value="4" onChange={handleReviewForm}/>
-                    </label>
-                    <label htmlFor="5">
-                        5:<input name="rating" type="radio" value="5" onChange={handleReviewForm}/>
-                    </label>
-                </label>
+                {radioButtons}
                 <label htmlFor="comment">Comment:
-                    <input name="comment" type="text" onChange={handleReviewForm}/>
+                    <input name="comment" type="text" value={newReview.comment} onChange={handleReviewForm}/>
                 </label>
                 <input type="submit" value="Submit Review!" />
             </form>
