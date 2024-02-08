@@ -1,15 +1,15 @@
 import React from "react";
 import UserBuildTile from "./BuildTile"
-import DeleteButton from "./DeleteButton";
+import DeleteBuildButton from "./DeleteBuildButton";
 
 const UserBuildsList = ({ buildsList, currentUserData, setUserData }) => {
 
     const userBuildTiles = buildsList.map((build) => {
         return (
             <li key={build.id}>
+                <UserBuildTile build={build} currentUserData={currentUserData} setUserData={setUserData} />
                 <div>
-                    <UserBuildTile build={build} currentUserData={currentUserData} setUserData={setUserData} />
-                    <DeleteButton dataToDelete={build.id} currentUserData={currentUserData} setUserData={setUserData} />
+                    <DeleteBuildButton dataToDelete={build.id} currentUserData={currentUserData} setUserData={setUserData} />
                 </div>
             </li>
         )

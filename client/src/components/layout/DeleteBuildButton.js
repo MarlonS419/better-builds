@@ -1,6 +1,6 @@
 import React from "react";
 
-const DeleteButton = ({currentUserData, dataToDelete, setUserData}) => {
+const DeleteBuildButton = ({currentUserData, dataToDelete, setUserData}) => {
     
     const buildId = dataToDelete
     const deleteBuild = async () => {
@@ -12,7 +12,7 @@ const DeleteButton = ({currentUserData, dataToDelete, setUserData}) => {
         console.log("Parsed Response: ", parsedResponse)
         if(parsedResponse.deleted){
             const newBuildList = parsedResponse.newBuildList
-            setUserData({...currentUserData, buildsList: newBuildList})
+            setUserData({...currentUserData, builds: newBuildList})
         }
     }
 
@@ -22,4 +22,4 @@ const DeleteButton = ({currentUserData, dataToDelete, setUserData}) => {
         </a>
     )
 }
-export default DeleteButton
+export default DeleteBuildButton

@@ -50,11 +50,8 @@ buildsRouter.delete("/:id", async (req,res) => {
         const buildUser = await buildToDelete.$relatedQuery("user")
         await buildToDelete.$relatedQuery("reviews").delete()
         const selectedBuild = await Build.query().delete().where({id: id})
-        console.log(selectedBuild)
-        console.log(buildUser.id)
         const newBuildList = await Build.query().where({userId: buildUser.id})
         return res.status(200).json({deleted: selectedBuild, newBuildList: newBuildList })
-        // newBuildList: newBuildList
     } catch (error) {
         console.log(error)
         return res.status(500).json({errors: error})
