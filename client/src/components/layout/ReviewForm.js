@@ -59,6 +59,7 @@ const ReviewForm = ({buildId, build, setBuild}) => {
                     const body = await response.json()
                     const updatedReviewArray = build.reviews.concat(body.reviewToAdd)
                     setNewReview(emptyFieldsObject)
+                    setReviewErrors({})
                     setBuild({...build, reviews: updatedReviewArray})
                 }
             } catch(error) {
