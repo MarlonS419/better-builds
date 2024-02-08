@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import BuildsList from "./BuildsList";
-import ReviewsList from "./ReviewsList"
+import UserBuildsList from "./UserBuildsList";
+import UserReviewsList from "./UserReviewsList"
 
 const UserShow = ({user}) => {
 
@@ -37,9 +37,9 @@ const UserShow = ({user}) => {
                 <li>User since: {formattedDate}</li>
             </ul>
             <h3>My Builds</h3>
-            <BuildsList onProfilePage={true} buildsList={currentUserData.buildsList}/>
+            <UserBuildsList buildsList={currentUserData.buildsList}/>
             <h3>My Reviews</h3>
-            <ReviewsList onProfilePage={true} reviews={currentUserData.reviewsList} />
+            <UserReviewsList reviewsList={currentUserData.reviewsList} />
         </>
     )
 }
