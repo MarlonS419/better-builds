@@ -2,7 +2,7 @@ import React from "react";
 
 const DeleteButton = ({currentUserData, dataToDelete, setUserData}) => {
     
-    const buildId = (dataToDelete)
+    const buildId = dataToDelete
     const deleteBuild = async () => {
         const responseFromDeletion = await fetch(`/api/v1/builds/${buildId}`, {
             method: "DELETE",

@@ -1,20 +1,24 @@
-import React, { Fragment } from "react";
+import React from "react";
 import UserBuildTile from "./BuildTile"
 import DeleteButton from "./DeleteButton";
 
-const UserBuildsList = ({ buildsList }) => {
+const UserBuildsList = ({ buildsList, currentUserData, setUserData }) => {
 
     const userBuildTiles = buildsList.map((build) => {
         return (
-            <UserBuildTile key={build.id} build={build} />
-            <DeleteButton />
+            <li key={build.id}>
+                <div>
+                    <UserBuildTile build={build} currentUserData={currentUserData} setUserData={setUserData} />
+                    <DeleteButton dataToDelete={build.id} currentUserData={currentUserData} setUserData={setUserData} />
+                </div>
+            </li>
         )
     })
 
     return (
-        <div>
+        <ul>
             {userBuildTiles}
-        </div>
+        </ul>
     )
 }
 
