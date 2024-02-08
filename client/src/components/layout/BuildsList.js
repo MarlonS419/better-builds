@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react"
 import BuildTile from "./BuildTile"
 
 const BuildsList = (props) => {
-
     const [currentBuilds, setCurrentBuilds] = useState([])
-
-    const onProfilePage = props.onProfilePage
 
     const getBuilds = async () => {
         try {

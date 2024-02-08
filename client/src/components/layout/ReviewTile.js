@@ -1,12 +1,12 @@
 import React from "react"
 
-const ReviewTile = ({review}) => {
+const ReviewTile = ({ review }) => {
     return (
         <>
-            <p>Rating: {review.rating}/5</p> 
+            <p>Rating: {review.rating}/5</p>
             <p>Comment: {review.comment}</p>
         </>
-        
+
     )
 }
 
