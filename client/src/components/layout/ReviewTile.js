@@ -6,7 +6,6 @@ const ReviewTile = (props) => {
         <>
             <p>Rating: {currentReview.rating}/5</p> 
             <p>Comment: {currentReview.comment}</p>
-
         </>
 
     )
