@@ -7,13 +7,14 @@ const UserBuildsList = ({ buildsList }) => {
     const userBuildTiles = buildsList.map((build) => {
         return (
             <UserBuildTile key={build.id} build={build} />
+            <DeleteButton />
         )
     })
 
     return (
-        <ul>
+        <div>
             {userBuildTiles}
-        </ul>
+        </div>
     )
 }
 
