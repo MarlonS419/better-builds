@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import BuildTile from "./BuildTile"
 
 const BuildsList = (props) => {
-
     const [currentBuilds, setCurrentBuilds] = useState([])
 
     const getBuilds = async () => {
@@ -24,6 +23,7 @@ const BuildsList = (props) => {
     useEffect(() => {
         getBuilds()
     }, [])
+
 
     return (
         <ul>

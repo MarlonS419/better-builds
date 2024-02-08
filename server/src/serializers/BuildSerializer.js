@@ -2,7 +2,7 @@ import ReviewSerializer from "./ReviewSerializer.js"
 
 class BuildSerializer {
     static async getBuildDetails(buildObject) {
-        const allowedAttributes = ["case", "processor", "coolingSystem", "coolingSystemType", "graphicsCard", "motherboard", "ram", "storageType", "storageAmount", "title", "createdAt"]
+        const allowedAttributes = ["id", "case", "processor", "coolingSystem", "coolingSystemType", "graphicsCard", "motherboard", "ram", "storageType", "storageAmount", "title", "createdAt"]
         
         let serializedBuildObject = {}
         

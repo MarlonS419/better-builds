@@ -43,6 +43,7 @@ class User extends uniqueFunc(Model) {
 
     return serializedJson;
   }
+  
   static get relationMappings() {
     const { Build, Review } = require("./index.js")
 
