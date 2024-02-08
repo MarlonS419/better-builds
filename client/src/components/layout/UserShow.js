@@ -30,8 +30,7 @@ const UserShow = ({ user }) => {
         <>
             <h1>My Profile</h1>
             <ul>
-                <li>Username</li>
-                <li>{user.email}</li>
+                <li>Email: {user.email}</li>
                 <li>User since: {formattedDate}</li>
             </ul>
             <h3>My Builds</h3>
