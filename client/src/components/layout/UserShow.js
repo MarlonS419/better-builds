@@ -2,12 +2,10 @@ import React, { useState, useEffect } from "react";
 import UserBuildsList from "./UserBuildsList";
 import UserReviewsList from "./UserReviewsList"
 
-const UserShow = ({user}) => {
-
+const UserShow = ({ user }) => {
     const [currentUserData, setUserData] = useState({
-        userInfo: {},
-        buildsList: [],
-        reviewsList: []
+        builds: [],
+        reviews: []
     })
 
     const createdAt = new Date(user.createdAt)
@@ -15,10 +13,10 @@ const UserShow = ({user}) => {
     const userID = user.id
 
     const getUserData = async () => {
-        try{
+        try {
             const fetchedUserData = await fetch(`/api/v1/user/${userID}`)
             const parsedUserData = await fetchedUserData.json()
-            setUserData(parsedUserData)
+            setUserData(parsedUserData.user)
         } catch (error) {
             console.error(error)
         }
@@ -33,13 +31,13 @@ const UserShow = ({user}) => {
             <h1>My Profile</h1>
             <ul>
                 <li>Username</li>
-                <li>{currentUserData.userInfo.email}</li>
+                <li>{user.email}</li>
                 <li>User since: {formattedDate}</li>
             </ul>
             <h3>My Builds</h3>
-            <UserBuildsList currentUserData={currentUserData} setUserData={setUserData} buildsList={currentUserData.buildsList}/>
+            <UserBuildsList buildsList={currentUserData.builds} />
             <h3>My Reviews</h3>
-            <UserReviewsList currentUserData={currentUserData} setUserData={setUserData} reviewsList={currentUserData.reviewsList} />
+            <UserReviewsList reviewsList={currentUserData.reviews} />
         </>
     )
 }

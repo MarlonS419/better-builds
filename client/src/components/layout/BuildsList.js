@@ -3,9 +3,8 @@ import BuildTile from "./BuildTile"
 
 
 const BuildsList = (props) => {
-
     const [currentBuilds, setCurrentBuilds] = useState([])
-      
+
     const getBuilds = async () => {
         try {
             const response = await fetch("/api/v1/builds/")
