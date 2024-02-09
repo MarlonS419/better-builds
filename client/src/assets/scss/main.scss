@@ -14,6 +14,45 @@
   tab-size: 4;
 }
 
+.build-show-page { // buildShowPage
+  background-image: url(computer-image.jpeg);
+  background-size: cover;
+  
+  .build-show-title-build {
+    display: grid;
+    place-items: center;
+  }
+  
+  .build-show-title {
+    text-align: center;
+    outline: auto;
+    background-color: #26413C;
+    color: #ffe5e5;
+    width: 500px;
+  }
+  
+  .build-show-list {
+    display: grid;
+    grid-template-columns: auto;
+    background: #982649;
+    color: #FF8F1F;
+    margin: 5px;
+    text-align: center;
+    width: 400px;
+    list-style-type: none;
+  }
+  
+  .build-show-reviews {
+    background-color: #ffe5e5;
+    width: 700px;
+    text-align: center;
+  }
+  
+  li:hover {
+    color: #ffe5e5;
+  }
+}
+
 .new-build-form {
   display: grid;
   grid-template-columns: auto auto;
@@ -30,48 +69,49 @@
   width: 35%;
 }
 
-.build-show-title {
-  text-align: center;
-  outline: auto;
-  background-color: #26413C;
-  color: #ffe5e5;
-  width: 200px;
-}
-
-.build-show-page {
-  display: grid;
-  place-items: center;
-}
-
-.build-show-list {
-  display: grid;
-  grid-template-columns: auto;
-  background: #982649;
-  color: #FF8F1F;
-  margin: 5px;
-  text-align: center;
-}
 
 .top-bar { // border around top bar
   background-color: #26413C;
+
+
+  .top-bar-left {  //Better Builds
+    color: #982649;
+  }
 }
 
-.top-bar-left {  //Better Builds
-  color: #982649;
-}
 
-.builds-list-ul{
-  color: #982649;
-  list-style-type: none;
-  background: #ffe5e5;
-  padding: 5px;
-  margin-left: 35px;
-}
 
-li:hover {
-  color: #ffe5e5;
-}
 
-.main-page {
+
+.main-page {  // Home Page
   text-align: center;
+  display: grid;
+  place-items: center;
+  
+  .banner {
+    width: 100%;
+    background-image: url(centerscreen.jpeg);
+    height: 405px;
+    background-position: center;
+    background-repeat: repeat-y;
+  }
+
+  .builds-list-ul{
+    color: #982649;
+    list-style-type: none;
+    background: #FF8F1F;
+    padding: 50px;
+    margin-left: 35px;
+    width: 500px;
+    font-size: 2rem;
+  }
+
+  .builds-list-title {
+    background-color: #FF8F1F;
+    width: 700px;
+  }
+
+  .build-link:hover {
+    color: #26413C;
+  }
 }

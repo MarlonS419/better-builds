@@ -27,7 +27,10 @@ const BuildsList = (props) => {
 
     return (
         <div className="main-page">
-            <h1>Welcome to Better Builds!</h1>
+            <h1 className="builds-list-title">Welcome to Better Builds!</h1>
+            <div className="banner">
+
+            </div>
             <ul className="builds-list-ul">
                 {buildTiles}
             </ul>

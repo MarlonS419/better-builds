@@ -5,7 +5,7 @@ class BuildSeeder {
       const user = await User.query().findOne({ email: "test1@email.com" })
       const buildsData = [
         {
-          title: "Seed Build 1",
+          title: "Sesame street build",
           userId: user.id,
           processor: "intel i5",
           graphicsCard: "nvidia 3070",
@@ -18,7 +18,7 @@ class BuildSeeder {
           storageAmount: 1000
         },
         {
-          title: "Seed Build 2",
+          title: "My streaming build",
           userId: user.id,
           processor: "intel i6",
           graphicsCard: "nvidia 3080",
@@ -31,7 +31,7 @@ class BuildSeeder {
           storageAmount: 2000
         },
         {
-          title: "Seed Build 3",
+          title: "My gaming build",
           userId: user.id,
           processor: "intel i8",
           graphicsCard: "nvidia 3090",

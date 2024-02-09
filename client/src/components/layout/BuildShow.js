@@ -32,22 +32,27 @@ const BuildShow = (props) => {
     }
     
     return (
-        <>
-            <h3 className="build-show-title" >{build.title}</h3>
-            <ul className="build-show-list">
-                <li>Case: {build.case}</li>
-                <li>GPU: {build.graphicsCard}</li>
-                <li>Motherboard: {build.motherboard}</li>
-                <li>CPU: {build.processor}</li>
-                <li>Ram: {build.ram}</li>
-                <li>Storage Type: {build.storageType}</li>
-                <li>Storage: {build.storageAmount}gb</li>
-                <li>Cooling System: {build.coolingSystem}</li>
-                <li>Cooling System Type: {build.coolingSystemType}</li>
-            </ul>
-            {reviewForm}
-            <ReviewsList reviews={build.reviews}/>
-        </>
+        <div className="build-show-page">
+            <div className="build-show-title-build">
+                <h3 className="build-show-title" >{build.title}</h3>
+                <ul className="build-show-list">
+                    <li>Case: {build.case}</li>
+                    <li>GPU: {build.graphicsCard}</li>
+                    <li>Motherboard: {build.motherboard}</li>
+                    <li>CPU: {build.processor}</li>
+                    <li>Ram: {build.ram}</li>
+                    <li>Storage Type: {build.storageType}</li>
+                    <li>Storage: {build.storageAmount}gb</li>
+                    <li>Cooling System: {build.coolingSystem}</li>
+                    <li>Cooling System Type: {build.coolingSystemType}</li>
+                </ul>
+            </div>
+            <div className="build-show-reviews">
+                {reviewForm}
+                <ReviewsList reviews={build.reviews}/>
+            </div>
+        </div>
+
     )
 }
 
