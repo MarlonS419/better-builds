@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import UserBuildsList from "./UserBuildsList";
 import UserReviewsList from "./UserReviewsList"
 
@@ -27,17 +27,23 @@ const UserShow = ({ user }) => {
     }, [])
 
     return (
-        <>
+        <div className="user-profile">
             <h1>My Profile</h1>
             <ul>
                 <li>Email: {user.email}</li>
                 <li>User since: {formattedDate}</li>
             </ul>
-            <h3>My Builds</h3>
-            <UserBuildsList buildsList={currentUserData.builds} currentUserData={currentUserData} setUserData={setUserData}/>
-            <h3>My Reviews</h3>
-            <UserReviewsList reviewsList={currentUserData.reviews} currentUserData={currentUserData} setUserData={setUserData}/>
-        </>
+            <div className="user-info">
+                <div className="builds">
+                    <h3>My Builds</h3>
+                    <UserBuildsList buildsList={currentUserData.builds} currentUserData={currentUserData} setUserData={setUserData} />
+                </div>
+                <div className="reviews">
+                    <h3>My Reviews</h3>
+                    <UserReviewsList reviewsList={currentUserData.reviews} currentUserData={currentUserData} setUserData={setUserData} />
+                </div>
+            </div>
+        </div>
     )
 }
 
