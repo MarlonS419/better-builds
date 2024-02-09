@@ -13,9 +13,9 @@ const UserBuildsList = ({ buildsList, currentUserData, setUserData }) => {
     })
 
     return (
-        <ul>
+        <div>
             {userBuildTiles}
-        </ul>
+        </div>
     )
 }
 
