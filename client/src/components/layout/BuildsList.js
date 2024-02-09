@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import BuildTile from "./BuildTile"
 
-
 const BuildsList = (props) => {
     const [currentBuilds, setCurrentBuilds] = useState([])
 
@@ -13,11 +12,11 @@ const BuildsList = (props) => {
         } catch (error) {
             console.error(`Error Fetching Build List: ${error}`)
         }
-    }    
+    }
 
     const buildTiles = currentBuilds.map((build) => {
         return (
-            <li key={build.id}><BuildTile build={build} /></li>
+            <BuildTile build={build} />
         )
     })
 

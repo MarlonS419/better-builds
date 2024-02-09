@@ -1,25 +1,24 @@
 import React from "react";
 
-const DeleteBuildButton = ({currentUserData, dataToDelete, setUserData}) => {
-    
+const DeleteBuildButton = ({ currentUserData, dataToDelete, setUserData }) => {
     const buildId = dataToDelete
+
     const deleteBuild = async () => {
         const responseFromDeletion = await fetch(`/api/v1/builds/${buildId}`, {
             method: "DELETE",
             headers: new Headers({ "Content-Type": "application/json" })
         })
         const parsedResponse = await responseFromDeletion.json()
-        console.log("Parsed Response: ", parsedResponse)
-        if(parsedResponse.deleted){
+        if (parsedResponse.deleted) {
             const newBuildList = parsedResponse.newBuildList
-            setUserData({...currentUserData, builds: newBuildList})
+            setUserData({ ...currentUserData, builds: newBuildList })
         }
     }
 
     return (
-        <a onClick={deleteBuild}>
+        <button className="button" onClick={deleteBuild}>
             Delete
-        </a>
+        </button>
     )
 }
 export default DeleteBuildButton
