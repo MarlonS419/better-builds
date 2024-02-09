@@ -1,10 +1,12 @@
 import React, { Fragment } from "react";
-import UserBuildTile from "./BuildTile"
+import UserBuildsTile from "./UserBuildsTile"
 
-const UserBuildsList = ({ buildsList }) => {
+const UserBuildsList = ({ buildsList, currentUserData, setUserData }) => {
     const userBuildTiles = buildsList.map((build) => {
         return (
-            <UserBuildTile key={build.id} build={build} />
+            <Fragment key={build.id}>
+                <UserBuildsTile build={build} currentUserData={currentUserData} setUserData={setUserData} />
+            </Fragment>
         )
     })
 

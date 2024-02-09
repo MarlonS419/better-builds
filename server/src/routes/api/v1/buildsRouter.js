@@ -14,10 +14,10 @@ buildsRouter.post("/", async (req, res) => {
     try {
         const cleanedFormData = cleanBuildForm(buildToAdd)
         const insertedBuild = await Build.query().insert(cleanedFormData)
-        return res.status(201).json({newBuild: insertedBuild})
+        return res.status(201).json({ newBuild: insertedBuild })
     } catch (error) {
-        if(error instanceof ValidationError){
-            return res.status(422).json({errors: error.data})
+        if (error instanceof ValidationError) {
+            return res.status(422).json({ errors: error.data })
         }
         return res.status(500).json({ errors: error.message })
     }
@@ -33,14 +33,27 @@ buildsRouter.get("/", async (req, res) => {
 })
 
 buildsRouter.get("/:id", async (req, res) => {
-    const id  = req.params.id
-    try{
+    const id = req.params.id
+    try {
         const selectedBuild = await Build.query().findById(id)
         const serializedBuild = await BuildSerializer.getBuildDetails(selectedBuild)
-        res.status(200).json({ build: serializedBuild })
-    } catch(error) {
-        res.status(500).json({errors: error})
+        return res.status(200).json({ build: serializedBuild })
+    } catch (error) {
+        return res.status(500).json({ errors: error })
     }
 })
 
+buildsRouter.delete("/:id", async (req, res) => {
+    try {
+        const currentUserID = req.user.id
+        const buildID = req.params.id
+        const buildToDelete = await Build.query().findById(buildID)
+        await buildToDelete.$relatedQuery("reviews").delete()
+        const selectedBuild = await Build.query().delete().where({ id: buildID })
+        const newBuildList = await Build.query().where({ userId: currentUserID })
+        return res.status(200).json({ deleted: selectedBuild, newBuildList: newBuildList })
+    } catch (error) {
+        return res.status(500).json({ errors: error })
+    }
+})
 export default buildsRouter

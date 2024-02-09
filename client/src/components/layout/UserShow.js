@@ -34,9 +34,9 @@ const UserShow = ({ user }) => {
                 <li>User since: {formattedDate}</li>
             </ul>
             <h3>My Builds</h3>
-            <UserBuildsList buildsList={currentUserData.builds} />
+            <UserBuildsList buildsList={currentUserData.builds} currentUserData={currentUserData} setUserData={setUserData}/>
             <h3>My Reviews</h3>
-            <UserReviewsList reviewsList={currentUserData.reviews} />
+            <UserReviewsList reviewsList={currentUserData.reviews} currentUserData={currentUserData} setUserData={setUserData}/>
         </>
     )
 }
