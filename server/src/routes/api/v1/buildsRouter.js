@@ -56,4 +56,16 @@ buildsRouter.delete("/:id", async (req, res) => {
         return res.status(500).json({ errors: error })
     }
 })
+
+buildsRouter.patch("/:id", async (req, res) => {
+    try {
+        const buildID = req.params.id
+        const buildToEdit = req.body
+        const editedBuild = await Build.query().updateAndFetchById(buildID, buildToEdit)
+        return res.status(200).json({ editedBuild: editedBuild })
+    } catch (error) {
+        return res.status(500).json({ errors: error })
+    }
+})
+
 export default buildsRouter
