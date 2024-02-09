@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import ReviewsList from "./ReviewsList"
 import ReviewForm from "./ReviewForm"
-import getCurrentUser from "../../services/getCurrentUser"
 
 const BuildShow = (props) => {
     const [build, setBuild] = useState({ reviews: [] })
@@ -22,27 +21,16 @@ const BuildShow = (props) => {
             console.log(error)
         }
     }
-    
-    const [currentUser, setCurrentUser] = useState(undefined);
-    const fetchCurrentUser = async () => {
-      try {
-        const user = await getCurrentUser()
-        setCurrentUser(user)
-      } catch(err) {
-        setCurrentUser(null)
-      }
-    }
 
     useEffect(() => {
         getBuild()
-        fetchCurrentUser()
     }, [])
 
     let reviewForm = null
-    if (currentUser) {
+    if (props.user) {
         reviewForm =  (<ReviewForm buildId={buildId} build={build} setBuild={setBuild} />)
     }
-
+    
     return (
         <div className="build-show-page">
             <div className="build-show-title-build">
@@ -60,10 +48,11 @@ const BuildShow = (props) => {
                 </ul>
             </div>
             <div className="build-show-reviews">
-                <ReviewsList reviews={build.reviews}/>
                 {reviewForm}
+                <ReviewsList reviews={build.reviews}/>
             </div>
         </div>
+
     )
 }
 

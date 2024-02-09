@@ -11,5 +11,4 @@ rootRouter.use("/api/v1/builds", buildsRouter)
 rootRouter.use("/api/v1/user", userDataRouter)
 rootRouter.use("/", clientRouter);
 
-
 export default rootRouter;
