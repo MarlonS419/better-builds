@@ -3,6 +3,7 @@ import { Build } from "../../../models/index.js"
 import objection from "objection"
 import cleanBuildForm from "../../../services/cleanBuildForm.js";
 import BuildSerializer from "../../../serializers/BuildSerializer.js";
+import buildsReviewsRouter from "./buildsReviewsRouter.js"
 const { ValidationError } = objection
 
 const buildsRouter = new express.Router()
@@ -42,5 +43,7 @@ buildsRouter.get("/:id", async (req, res) => {
         res.status(500).json({errors: error})
     }
 })
+
+buildsRouter.use("/:id/reviews", buildsReviewsRouter)
 
 export default buildsRouter

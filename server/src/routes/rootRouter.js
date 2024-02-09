@@ -11,6 +11,5 @@ rootRouter.use("/api/v1/builds", buildsRouter)
 rootRouter.use("/api/v1/user", userDataRouter)
 rootRouter.use("/", clientRouter);
 
-//place your server-side routes here
 
 export default rootRouter;

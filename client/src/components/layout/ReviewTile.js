@@ -1,10 +1,12 @@
 import React from "react"
 
-const ReviewTile = ({ review }) => {
+const ReviewTile = (props) => {
+    const currentReview = props.review
     return (
         <>
-            <p>Rating: {review.rating}/5</p>
-            <p>Comment: {review.comment}</p>
+            <p>Rating: {currentReview.rating}/5</p> 
+            <p>Comment: {currentReview.comment}</p>
+
         </>
 
     )
