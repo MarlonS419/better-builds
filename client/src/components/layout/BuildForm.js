@@ -93,7 +93,7 @@ const BuildForm = (props) => {
                         const serverErrors = translateServerErrors(serverData.errors)
                         return setBuildFormErrors(serverErrors)
                     } else {
-                        const errorMessage = `${ newBuildFormResponse.status } - ${ newBuildFormResponse.statusText }`
+                        const errorMessage = `${newBuildFormResponse.status} - ${newBuildFormResponse.statusText}`
                         const error = new Error(errorMessage)
                         throw (error)
                     }
@@ -113,7 +113,7 @@ const BuildForm = (props) => {
     }
 
     if (redirect.redirectState) {
-        const buildPage = `/builds/${ redirect.newBuildID }`
+        const buildPage = `/builds/${redirect.newBuildID}`
         return <Redirect push to={buildPage} />
     }
 

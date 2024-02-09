@@ -1,12 +1,10 @@
-import React from "react"
+import React, { useState } from "react"
 import ErrorList from "./ErrorList"
 import translateServerErrors from "../../services/translateServerErrors.js"
-const { useState } = require("react")
 
 const ReviewForm = ({buildId, build, setBuild}) => {
     const emptyFieldsObject = { rating: null, comment: "" }
     const [newReview, setNewReview] = useState(emptyFieldsObject)
-    console.log(newReview)
 
     const handleReviewForm = (event) => {
         setNewReview(
@@ -46,7 +44,7 @@ const ReviewForm = ({buildId, build, setBuild}) => {
                     body: JSON.stringify(newReview)
                 })
                 if (!response.ok) {
-                    if(response.status === 422) {
+                    if (response.status === 422) {
                         const body = await response.json()
                         const newErrors = translateServerErrors(body.errors)
                         return setReviewErrors(newErrors)
@@ -62,15 +60,16 @@ const ReviewForm = ({buildId, build, setBuild}) => {
                     setReviewErrors({})
                     setBuild({...build, reviews: updatedReviewArray})
                 }
-            } catch(error) {
+            } catch (error) {
                 console.error(`Error in fetch: ${error.message}`)
             }
         }
     }
+
     const options = [1, 2, 3, 4, 5]
     const radioButtons = options.map((optionNumber) => {
         return(
-            <label htmlFor={optionNumber}>
+            <label htmlFor={optionNumber} key={optionNumber}>
                 {optionNumber}:<input name="rating" type="radio" checked={parseInt(newReview.rating) === optionNumber} value={optionNumber} onChange={handleReviewForm}/>
             </label>
         )
