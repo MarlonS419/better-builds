@@ -5,8 +5,8 @@ const BuildTile = ({ build }) => {
     const { id } = build
 
     return (
-        <li>
-            <Link to={`/builds/${id}`}>
+        <li className="build-tile">
+            <Link to={`/builds/${id}`} className="build-link">
                 Title: {build.title}
             </Link>
         </li>

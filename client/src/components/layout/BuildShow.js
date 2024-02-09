@@ -44,8 +44,8 @@ const BuildShow = (props) => {
     }
 
     return (
-        <div>
-            <div className="build-show-page">
+        <div className="build-show-page">
+            <div className="build-show-title-build">
                 <h3 className="build-show-title" >{build.title}</h3>
                 <ul className="build-show-list">
                     <li>Case: {build.case}</li>
