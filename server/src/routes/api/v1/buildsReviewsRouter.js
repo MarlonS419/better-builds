@@ -7,7 +7,6 @@ import cleanBuildForm from "../../../services/cleanBuildForm.js";
 const buildsReviewsRouter = new express.Router({mergeParams: true})
 
 buildsReviewsRouter.post("/", async (req, res) => {
-    
     const currentlyLoggedInUser = req.user
     const submittedReview = req.body
 
@@ -19,9 +18,8 @@ buildsReviewsRouter.post("/", async (req, res) => {
         const reviewToAdd = await Review.query().insert(cleanedFormData)
         return res.status(201).json({ reviewToAdd })
     } catch (error) {
-        console.log(error)
-        if(error instanceof ValidationError){
-            return res.status(422).json({errors: error.data})
+        if (error instanceof ValidationError){
+            return res.status(422).json({ errors: error.data })
         }
         return res.status(500).json({ errors: error.message })
     }
