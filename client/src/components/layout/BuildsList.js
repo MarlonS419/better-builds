@@ -26,9 +26,12 @@ const BuildsList = (props) => {
 
 
     return (
-        <ul>
-            {buildTiles}
-        </ul>
+        <div className="main-page">
+            <h1>Welcome to Better Builds!</h1>
+            <ul className="builds-list-ul">
+                {buildTiles}
+            </ul>
+        </div>
     )
 }
 

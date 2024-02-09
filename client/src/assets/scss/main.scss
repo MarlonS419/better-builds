@@ -33,8 +33,14 @@
 .build-show-title {
   text-align: center;
   outline: auto;
-  outline-color: aquamarine;
   background-color: #26413C;
+  color: #ffe5e5;
+  width: 200px;
+}
+
+.build-show-page {
+  display: grid;
+  place-items: center;
 }
 
 .build-show-list {
@@ -43,5 +49,29 @@
   background: #982649;
   color: #FF8F1F;
   margin: 5px;
+  text-align: center;
+}
+
+.top-bar { // border around top bar
+  background-color: #26413C;
+}
+
+.top-bar-left {  //Better Builds
+  color: #982649;
+}
+
+.builds-list-ul{
+  color: #982649;
+  list-style-type: none;
+  background: #ffe5e5;
+  padding: 5px;
+  margin-left: 35px;
+}
+
+li:hover {
+  color: #ffe5e5;
+}
+
+.main-page {
   text-align: center;
 }

@@ -14,32 +14,32 @@ class ReviewSeeder {
             {
                 userId: user.id,
                 buildId: build.id,
-                rating: "3",
-                comment:"my man got dat Personal Computerrrrr!"
-            },
-            {
-                userId: user.id,
-                buildId: build.id,
-                rating: "4",
-                comment:"I hate this"
-            },
-            {
-                userId: user.id,
-                buildId: build.id,
-                rating: "2",
-                comment:"That case is sick!"
+                rating: "5",
+                comment:"my man has a great build!"
             },
             {
                 userId: user.id,
                 buildId: build.id,
                 rating: "1",
+                comment:"I dislike this"
+            },
+            {
+                userId: user.id,
+                buildId: build.id,
+                rating: "3",
+                comment:"That case is sick!"
+            },
+            {
+                userId: user.id,
+                buildId: build.id,
+                rating: "3",
                 comment:"The cable management is fire"
             },
             {
                 userId: user.id,
                 buildId: build.id,
-                rating: "5",
-                comment:"U suck"
+                rating: "1",
+                comment:"this build is inadequate"
             }
         ]
 
